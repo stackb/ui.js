@@ -1,0 +1,143 @@
+{namespace soy.js.ui autoescape="strict"}
+
+{template .Body}
+    <div class="ui page container {css main-body}">
+    </div>
+{/template}
+
+{template .Menu}
+    <div class="{css centered} {css top-menu}">
+        <div class="{css basic-ui-menu} ui secondary menu">
+            <a href="/#/" class="item">
+                <span class="{css bzl}">bzl</span>
+            </a>
+            <div class="item">
+                <div class="ui large fluid green input" style="width: 16rem">
+                    <input type="text" placeholder="Search..." />
+                </div>
+            </div>
+            <div class="right menu" >
+                <a href="/#/bzl/docs" class="item">
+                    Documentation
+                </a>
+                <a href="https://github.com/bzl-io/bzl" target="_blank" class="item">
+                    Github
+                </a>
+            </div>
+        </div>
+    </div>
+{/template}
+
+{template .Home}
+    <div style="margin: 1rem">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-100 -100 200 200" class="{css svglogo}" version="1.1">
+            <circle cx="0" cy="0" r="96" stroke="rgba(0,0,0,0.36)" stroke-width="1" fill="none" />
+            <circle cx="0" cy="0" r="94" stroke="#21ba45" stroke-width="3" stroke-dasharray="11,20" fill="none" />
+            <circle cx="0" cy="0" r="94" stroke="darkgreen" stroke-width="0.5" stroke-dasharray="11,20" fill="none" />
+        </svg>
+        <div class="ui centered huge green header">Bezel
+            <div class="sub header">A ring around the <a href="https://bazel.build">bazel build tool</a>.</div>
+        </div>
+
+        <div style="margin: 1rem" class="ui three column grid">
+            <div class="row">
+                <div class="sixteen wide column markdown-body">
+                    <h2 class="ui header">
+                        What is <code class="{css bzl}">bzl</code>?
+                    </h2>
+
+                    <code class="{css bzl}">bzl</code> is a
+                    command-line application that adds extra
+                    functionality to bazel.  In practice, it acts as a
+                    drop-in replacement for bazel itself (and shorter
+                    to type!).  Any command or command-line-option not
+                    specifically interpreted by bzl is passed directly
+                    to bazel itself.
+
+                    <p>For example: <code>$ bzl build :app</code> works exactly like you'd expect.</p> 
+
+                    <h1 class="ui header">
+                        Install <code class="{css bzl}">bzl</code>
+                    </h1>
+
+                    <code class="{css bzl}">bzl</code> ships as a
+                    single executable go binary.  Download the file
+                    directly from the <a href="https://github.com/bzl-io/bzl">Github Releases Page</a> for
+                    the precompiled platform of your choice.
+                    
+                    <h2 class="ui header">
+                        How is <code class="{css bzl}">bzl</code> pronounced?
+                    </h2>
+
+                    <code class="{css bzl}">bzl</code> is pronounced like <strong>bezel</strong>,
+                    as in "<em>the bezel of a watch</em>".  The name
+                    invokes it's function (a wrapper around bazel).
+
+                    <blockquote style="margin-top: 1rem;">
+                        In the 1950s, watchmakers realized that an
+                        external bezel was the best way to add functions
+                        to a watch without complicating the movement, and
+                        so the external watch bezel was born.
+                    </blockquote>
+
+                    <h2 class="ui header">
+                        <code class="{css bzl}">bzl</code> commands
+                    </h2>
+
+                    Examples:
+                    <p/>
+                    
+                    <table>
+                        <tr>
+                            <td><code>$ bzl release</code></td>
+                            <td>List all available releases</td>
+                        </tr>
+                        <tr>
+                            <td><code>$ bzl release 0.8.0</code></td>
+                            <td>Show the assets bundled in release 0.8.0</td>
+                        </tr>
+                        <tr>
+                            <td><code>$ bzl release 0.8.0 install</code></td>
+                            <td>Install bazel release 0.8.0</td>
+                        </tr>
+                    </table>
+                    
+                </div>
+            </div>
+        </div>
+        
+    </div>
+{/template}
+
+{template .Logo}
+    <div style="margin: 1rem">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-100 -100 200 200" class="{css svglogo}" version="1.1">
+            <circle cx="0" cy="0" r="96" stroke="rgba(0,0,0,0.36)" stroke-width="1" fill="none" />
+            <circle cx="0" cy="0" r="94" stroke="#21ba45" stroke-width="3" stroke-dasharray="11,20" fill="none" />
+            <circle cx="0" cy="0" r="94" stroke="darkgreen" stroke-width="0.5" stroke-dasharray="11,20" fill="none" />
+        </svg>
+        <div class="ui centered huge green header">Bez&#x305;el
+            <div class="sub header">The bazel.build meta-universe</div>
+        </div>
+        <div class="ui large fluid green input" style="max-width: 24rem; margin: 0 auto;">
+            <input type="text" placeholder="Search..." />
+        </div>
+        <div class="ui relaxed divided big selection animated list">
+        </div>
+    </div>
+{/template}
+
+
+{template .List}
+    <div class="ui relaxed divided selection animated list">
+    </div>
+{/template}
+
+{template .IconButton}
+    {@param icon: string}
+    {@param content: string}
+    <button class="ui button" style="margin-bottom: 1.5rem;">
+        <i class="{$icon} icon"></i>
+        {$content}
+    </button>
+{/template}

@@ -1,0 +1,54 @@
+.main-body {
+  border: 1px solid rgba(0,0,0,0.16);
+  margin: 6.5rem 2rem 0;
+}
+
+.basic-ui-menu {
+    border: none !important;
+    margin: 0 auto;
+    box-shadow: none;
+}
+
+.mute-36 {
+  color: rgba(0,0,0,0.36) !important;
+}
+
+.bzl {
+    font-size: 1.1rem;
+    color: #21ba45;
+}
+
+.margin-03 {
+    margin: 0.3rem 0;
+}
+
+.bg_yellow {
+    background-color: #ffffe0 !important;
+}
+
+.loadable {
+    min-width: 5rem;
+    min-height: 5rem;
+}
+
+.gh-user {
+    border: 1px solid black;
+}
+
+.svglogo {
+    display: block;
+    margin: 0 auto;
+    max-width: 20%;
+    height: 50%;
+    background-color: rgba(0,0,0,.00);
+}
+
+.top-menu {
+    top: 0;
+}
+
+.centered {
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
