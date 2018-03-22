@@ -1,11 +1,11 @@
 /**
  * @fileoverview
  */
-goog.module('js.ui.History');
+goog.module('stack.ui.History');
 
 const EventTarget =  goog.require('goog.events.EventTarget');
 const EventType =  goog.require('goog.events.EventType');
-//const HEvent =  goog.require('js.ui.history.Event');
+//const HEvent =  goog.require('stack.ui.history.Event');
 const HEventType =  goog.require('goog.history.EventType');
 const Html5History =  goog.require('goog.history.Html5History');
 const TagName =  goog.require('goog.dom.TagName');
@@ -49,6 +49,8 @@ class History extends EventTarget {
    * @suppress {reportUnknownTypes}
    */
   handleDocumentClick(e) {
+    console.log("history; click!");
+
     // Element that was clicked could be a child of of the <a>, so
     // look up through the ancestry chain.
     let anchor = /** @type {?HTMLAnchorElement} */ (
@@ -63,23 +65,30 @@ class History extends EventTarget {
     if (!hash) {
       return;
     }
+    console.log("history; hash", hash);
     if (!strings.startsWith(hash, '#/')) {
       return;
     }
+    console.log("History: ehh?");
     e.preventDefault();
     e.stopPropagation();
     hash = hash.substring(2);
     //this.history_.replaceToken(hash);
     //this.replaceToken(hash);
-    this.history_.setToken(hash);
+    //if (!hash.startsWith("/")) {
+    //  hash = window.location.href + "/" + hash;
+    //}
+
+    //this.history_.setToken(hash);
+    this.setLocation(hash);
   }
 
   /**
    * @param {string} token
    */
   replaceToken(token) {
-    console.log('Replace token (NOT!)' + token);
-    //this.history_.replaceToken(token);
+    console.log('Replace token', token);
+    this.history_.replaceToken(token);
   }
   
   /**
@@ -96,10 +105,11 @@ class History extends EventTarget {
     var target = this.history_.getToken();
     target = decodeURIComponent(target);
 
+    console.log("handleNavigate target=", target, this.history_.getToken());
     if (target != this.current_) {
       this.dispatchEvent(e);
     } else {
-      console.log('Skipping navigate', target);
+      console.log('Skipping navigate (no difference)', target);
     }
   }
 

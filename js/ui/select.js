@@ -2,9 +2,9 @@
  * @fileoverview
  * @suppress {reportUnknownTypes}
  */
-goog.module('js.ui.Select');
+goog.module('stack.ui.Select');
 
-const Component =  goog.require('js.ui.Component');
+const Component =  goog.require('stack.ui.Component');
 const asserts =  goog.require('goog.asserts');
 
 /**
@@ -133,7 +133,7 @@ class Select extends Component {
   
   /**
    * @param {string} name
-   * @param {!js.ui.Route} route
+   * @param {!stack.ui.Route} route
    */
   select(name, route) {
     asserts.assertString(name);
@@ -148,7 +148,7 @@ class Select extends Component {
   
   /**
    * @param {string} name
-   * @param {!js.ui.Route} route
+   * @param {!stack.ui.Route} route
    */
   selectFail(name, route) {
     route.fail(this, 'No tab for ' + name + ' in ' + JSON.stringify(this.name2id_));
@@ -185,13 +185,6 @@ class Select extends Component {
     }
     this.current_ = null;
     return prev;
-  }
-
-  /**
-   * @return {!js.ui.App}
-   */
-  getApp() {
-    return /** @type {!js.ui.App} */ (this.getRoot());
   }
   
 }

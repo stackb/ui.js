@@ -2,18 +2,18 @@
  * @fileoverview
  * @suppress {reportUnknownTypes}
  */
-goog.module('js.ui.Router');
+goog.module('stack.ui.Router');
 
-const Component = goog.require('js.ui.Component');
+const Component = goog.require('stack.ui.Component');
 const ComponentEventType = goog.require('goog.ui.Component.EventType');
 const EventHandler = goog.require('goog.events.EventHandler');
 const EventTarget = goog.require('goog.events.EventTarget');
-//const HEvent =  goog.require('js.ui.history.Event');
+//const HEvent =  goog.require('stack.ui.history.Event');
 //const HEventType =  goog.require('goog.history.EventType');
-const History_ =  goog.require('js.ui.History');
+const History_ =  goog.require('stack.ui.History');
 const Promise_ =  goog.require('goog.Promise');
-const Route =  goog.require('js.ui.Route');
-const RouteEvent =  goog.require('js.ui.route.Event');
+const Route =  goog.require('stack.ui.Route');
+const RouteEvent =  goog.require('stack.ui.route.Event');
 const asserts =  goog.require('goog.asserts');
 //const events =  goog.require('goog.events');
 //const strings =  goog.require('goog.string');
@@ -114,7 +114,7 @@ class Router extends EventTarget {
    * @return {!Promise_<!Route>}
    */
   go(path) {
-    //console.log('go: ' + path);
+    console.log('go: ' + path);
     asserts.assertString(path, 'Routing path must be a string');
     if (this.route_) {
       console.warn(`cannot route to ${path} due to existing route`, this.route_);
@@ -149,18 +149,18 @@ class Router extends EventTarget {
 
   /** @param {!RouteEvent} e */
   handleProgress(e) {
-    //console.log(e.target.index() + '. Progress ' + e.target.pathMatched(), e.component);
+    console.log(e.target.index() + '. Progress ' + e.target.pathMatched(), e.component);
   }
 
   /** @param {!RouteEvent} e */
   handleDone(e) {
-    //console.log('Done! ' + e.target.pathMatched(), e.component);
+    console.log('Done! ' + e.target.pathMatched(), e.component);
     this.unlistenRoute();
   }
 
   /** @param {!RouteEvent} e */
   handleFail(e) {
-    //console.warn('Route Failed: ' + e.target.getFailReason());
+    console.warn('Route Failed: ' + e.target.getFailReason());
     this.unlistenRoute();
   }
 

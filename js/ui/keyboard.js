@@ -1,4 +1,4 @@
-goog.module('js.ui.Keyboard');
+goog.module('stack.ui.Keyboard');
 
 const Disposable = goog.require('goog.Disposable');
 const KeyboardShortcutEvent = goog.require('goog.ui.KeyboardShortcutEvent');

@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-goog.module('js.ui.HistoryTest');
-goog.setTestOnly('js.ui.HistoryTest');
+goog.module('stack.ui.HistoryTest');
+goog.setTestOnly('stack.ui.HistoryTest');
 
-const BzlHistory = goog.require('js.ui.History');
-const HEvent = goog.require('js.ui.history.Event');
+const BzlHistory = goog.require('stack.ui.History');
+const HEvent = goog.require('stack.ui.history.Event');
 const TagName = goog.require('goog.dom.TagName');
 const dom = goog.require('goog.dom');
 const events = goog.require('goog.events');

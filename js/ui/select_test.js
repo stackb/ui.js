@@ -1,8 +1,8 @@
-goog.module('js.ui.SelectTest');
-goog.setTestOnly('js.ui.SelectTest');
+goog.module('stack.ui.SelectTest');
+goog.setTestOnly('stack.ui.SelectTest');
 
-const Route = goog.require('js.ui.Route');
-const Select = goog.require('js.ui.Select');
+const Route = goog.require('stack.ui.Route');
+const Select = goog.require('stack.ui.Select');
 const jsunit = goog.require('goog.testing.jsunit');
 const testSuite = goog.require('goog.testing.testSuite');
 

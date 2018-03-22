@@ -2,12 +2,11 @@
  * @fileoverview
  * @suppress {reportUnknownTypes}
  */
-goog.module('js.ui.Component');
+goog.module('stack.ui.Component');
 
 const BgColorTransform = goog.require('goog.fx.dom.BgColorTransform');
 const GoogUiComponent = goog.require('goog.ui.Component');
 const asserts = goog.require('goog.asserts');
-const classlist = goog.require('goog.dom.classlist');
 const easing = goog.require('goog.fx.easing');
 const strings = goog.require('goog.string');
 const style = goog.require('goog.style');
@@ -82,9 +81,10 @@ class Component extends GoogUiComponent {
   }
 
   /**
-   * @param {!js.ui.Route} route
+   * @param {!stack.ui.Route} route
    */
   go(route) {
+    //console.info('go ' + route.getPath(), this);
     route.progress(this);
     if (route.atEnd()) {
       this.goHere(route);
@@ -94,7 +94,7 @@ class Component extends GoogUiComponent {
   }
 
   /**
-   * @param {!js.ui.Route} route
+   * @param {!stack.ui.Route} route
    */
   goHere(route) {
     this.show();
@@ -102,47 +102,47 @@ class Component extends GoogUiComponent {
   }
 
   /**
-   * @param {!js.ui.Route} route
+   * @param {!stack.ui.Route} route
    */
   goDown(route) {
     route.fail(this);
   }
 
   /**
-   * @return {?js.ui.Component}
+   * @return {?stack.ui.Component}
    */
   parent() {
-    return /** @type {?js.ui.Component} */ (
+    return /** @type {?stack.ui.Component} */ (
       this.getParent()
     );
   }
 
   /**
    * @param {string} id
-   * @return {?js.ui.Component}
+   * @return {?stack.ui.Component}
    */
   child(id) {
-    return /** @type {?js.ui.Component} */ (
+    return /** @type {?stack.ui.Component} */ (
       this.getChild(id)
     );
   }
 
   /**
    * @param {number} index
-   * @return {!js.ui.Component}
+   * @return {!stack.ui.Component}
    */
   childAt(index) {
-    return /** @type {!js.ui.Component} */ (
+    return /** @type {!stack.ui.Component} */ (
       asserts.assertObject(this.getChildAt(index))
     );
   }
 
   /**
    * @param {string} id
-   * @return {!js.ui.Component}
+   * @return {!stack.ui.Component}
    */
   strictchild(id) {
-    return /** @type {!js.ui.Component} */ (
+    return /** @type {!stack.ui.Component} */ (
       asserts.assertObject(this.getChild(id))
     );
   }
@@ -150,10 +150,10 @@ class Component extends GoogUiComponent {
   /**
    * Return the root component.
    * 
-   * @return {!js.ui.Component}
+   * @return {!stack.ui.Component}
    */
   getRoot() {
-    /** @type {?js.ui.Component} */
+    /** @type {?stack.ui.Component} */
     let current = this;
     while (current) {
       if (!current.parent()) {
@@ -163,6 +163,14 @@ class Component extends GoogUiComponent {
     }
     throw new ReferenceError('Root reference not available');
   }
+
+  /**
+   * @return {!stack.ui.App}
+   */
+  getApp() {
+    return /** @type {!stack.ui.App} */ (this.getRoot());
+  }
+
   
   /**
    * Default is no-op.
@@ -197,24 +205,6 @@ class Component extends GoogUiComponent {
   getShowHideElement() {
     return this.getElementStrict();
   }
-
-  /**
-   * @param {boolean} b
-   */
-  setLoading(b) {
-    var e = this.getLoadingElement();
-    if (e) {
-      classlist.enable(e, 'loading', b);
-    }
-  }
-
-  /**
-   * @return {?Element}
-   */
-  getLoadingElement() {
-    return this.getElement();
-  }
-
 
   /**
    * @param {!Array<number>=} opt_start 3D Array for RGB of start color.

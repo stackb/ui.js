@@ -1,9 +1,9 @@
 
-goog.module('js.ui.ComponentTest');
-goog.setTestOnly('js.ui.ComponentTest');
+goog.module('stack.ui.ComponentTest');
+goog.setTestOnly('stack.ui.ComponentTest');
 
-const UiComponent = goog.require('js.ui.Component');
-const Route = goog.require('js.ui.Route');
+const UiComponent = goog.require('stack.ui.Component');
+const Route = goog.require('stack.ui.Route');
 const classlist = goog.require('goog.dom.classlist');
 const jsunit = goog.require('goog.testing.jsunit');
 const testSuite = goog.require('goog.testing.testSuite');

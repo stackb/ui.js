@@ -1,12 +1,11 @@
-goog.module('js.ui.App');
+goog.module('stack.ui.App');
 
-const Body = goog.require('js.ui.Body');
-const BzlHistory = goog.require('js.ui.History');
-const Component = goog.require('js.ui.Component');
+const BzlHistory = goog.require('stack.ui.History');
+const Component = goog.require('stack.ui.Component');
 const HEventType =  goog.require('goog.history.EventType');
-const Keyboard = goog.require('js.ui.Keyboard');
+const Keyboard = goog.require('stack.ui.Keyboard');
 const Promise_ =  goog.require('goog.Promise');
-const Router =  goog.require('js.ui.Router');
+const Router =  goog.require('stack.ui.Router');
 const asserts =  goog.require('goog.asserts');
 const dom =  goog.require('goog.dom');
 
@@ -38,11 +37,6 @@ class App extends Component {
     var router = this.router_ = new Router(this, this.history_);
     this.registerDisposable(router);
 
-    /** @private @type {!Component} */
-    this.body_ = new Body(this.dom_);
-    this.registerDisposable(this.body_);
-
-    
   }
 
   start() {
@@ -55,11 +49,22 @@ class App extends Component {
   handleHistoryNavigate(e) {
     //console.log('NAVIGATE2!', e);
     this.router_.go(e.token).thenCatch(err => {
-      console.log(`Routing failure while nagivating to ${e.token}`);
+      this.notifyError(`Routing failure while nagivating to ${e.token}`);
     });
   }
   
-
+  /**
+   * @param {!Component} c
+   * @param {!boolean} b
+   */
+  setLoading(c, b) {
+    if (b) {
+      console.log("Starting Loading " + c.getPathUrl());
+    } else {
+      console.log("Stop Loaded " + c.getPathUrl());
+    }
+  }
+  
   /**
    * @return {!Keyboard}
    */
@@ -72,25 +77,6 @@ class App extends Component {
    */
   getRouter() {
     return this.router_;
-  }
-
-  /** @override */
-  enterDocument() {
-    super.enterDocument();
-    //this.addChild(this.header_, true);
-    //this.addChild(new Logo(), true);
-    this.addChild(this.body_, true);
-    //this.addChild(this.footer_, true);
-    //this.resizeHeaderHeight();
-  }
-
-  resizeHeaderHeight() {
-    //var headerSize = style.getSize(this.header_.getElementStrict());
-    //var el = this.body_.getElement();
-    //el.style.position = 'fixed';
-    //el.style.mar = headerSize.height + 'px';
-    //el.style.maxHeight = '100%';
-    //el.style.overflow = 'auto';
   }
   
   /**
@@ -135,12 +121,11 @@ class App extends Component {
 
   /** @override */
   go(route) {
-    route.touch(this);
-    route.progress(this);
-    this.body_.go(route);
+    //route.touch(this);
+    super.go(route);
   }
   
-  /** @param {!js.ui.Route} route */
+  /** @param {!stack.ui.Route} route */
   handle404(route) {
     this.notifyError("404 (Not Found): " + route.getPath());
   }
@@ -158,7 +143,7 @@ class App extends Component {
    * will loopback on this object to the go() method.
    *
    * @param {string} path
-   * @return {!Promise_<!js.ui.Route>}
+   * @return {!Promise_<!stack.ui.Route>}
    */
   route(path) {
     //console.log('App.route', path);

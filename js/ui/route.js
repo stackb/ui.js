@@ -1,6 +1,6 @@
-goog.module('js.ui.Route');
+goog.module('stack.ui.Route');
 
-const Event =  goog.require('js.ui.route.Event');
+const Event =  goog.require('stack.ui.route.Event');
 const EventTarget = goog.require('goog.events.EventTarget');
 const Promise_ = goog.require('goog.Promise');
 const asserts = goog.require('goog.asserts');
@@ -23,7 +23,7 @@ class Route extends EventTarget {
     /** @private @type {number} */
     this.index_ = 0;
 
-    /** @private @type {!Array<!js.ui.Component>} */
+    /** @private @type {!Array<!stack.ui.Component>} */
     this.progress_ = [];
 
     /** @private @type {string} */
@@ -32,7 +32,7 @@ class Route extends EventTarget {
     /** @private @type {string|undefined} */
     this.failReason_ = undefined;
 
-    /** @private @type {!goog.promise.Resolver<!js.ui.Route>} */
+    /** @private @type {!goog.promise.Resolver<!stack.ui.Route>} */
     this.resolver_ = Promise_.withResolver();
 
   }
@@ -73,7 +73,7 @@ class Route extends EventTarget {
    * Get the indexed progress component or the last one if not set.
    *
    * @param {?number=} index
-   * @return {?js.ui.Component}
+   * @return {?stack.ui.Component}
    */
   get(index) {
     index = goog.isNumber(index) ? index : this.index_ - 1;
@@ -150,13 +150,14 @@ class Route extends EventTarget {
    * @throws {Error}
    */
   assertInProgress() {
+    //console.trace("checking in-progress");
     asserts.assert(this.inProgress(), 'Expected in-progress, but the route state was: ' + this.state_);
   }
 
   /**
    * Record a non-contributing hop along the path, used mainly
    * for debugging.
-   * @param {!js.ui.Component} component
+   * @param {!stack.ui.Component} component
    */
   touch(component) {
     //console.log('touch:', component);
@@ -175,7 +176,7 @@ class Route extends EventTarget {
   }
 
   /**
-   * @param {!js.ui.Component} component
+   * @param {!stack.ui.Component} component
    */
   progress(component) {
     //console.log('progress: in progress?', this.inProgress());
@@ -188,7 +189,7 @@ class Route extends EventTarget {
   }
 
   /**
-   * @param {!js.ui.Component} component
+   * @param {!stack.ui.Component} component
    */
   done(component) {
     this.assertInProgress();
@@ -199,7 +200,7 @@ class Route extends EventTarget {
   }
 
   /**
-   * @param {!js.ui.Component} component
+   * @param {!stack.ui.Component} component
    * @param {string=} opt_reason
    */
   fail(component, opt_reason) {
@@ -208,11 +209,12 @@ class Route extends EventTarget {
     this.failReason_ = opt_reason || 'No route to ' + this.getPath();
     this.notifyEvent(Route.EventType.FAIL, component);
     this.resolver_.reject(this);
+    //console.log('Fail!', component);
   }
 
   /**
    * @param {string} type
-   * @param {?js.ui.Component} component
+   * @param {?stack.ui.Component} component
    */
   notifyEvent(type, component) {
     this.dispatchEvent(new Event(type, this, component));

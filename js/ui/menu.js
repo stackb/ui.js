@@ -1,11 +1,11 @@
-goog.module('js.ui.Menu');
+goog.module('stack.ui.Menu');
 
-const Component = goog.require('js.ui.Component');
+const Component = goog.require('stack.ui.Component');
 const ComponentEventType = goog.require('goog.ui.Component.EventType');
 const EventType = goog.require('goog.events.EventType');
-const RouteEvent =  goog.require('js.ui.route.Event');
+const RouteEvent =  goog.require('stack.ui.route.Event');
 const dom = goog.require('goog.dom');
-const main = goog.require('soy.js.ui');
+const main = goog.require('soy.stack.ui');
 const soy = goog.require('goog.soy');
 
 class Menu extends Component {
@@ -81,10 +81,10 @@ class Menu extends Component {
   }
 
   /**
-   * @return {!js.ui.App}
+   * @return {!stack.ui.App}
    */
   getApp() {
-    return /** @type {!js.ui.App} */ (this.getRoot());
+    return /** @type {!stack.ui.App} */ (this.getRoot());
   }
   
 }

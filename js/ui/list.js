@@ -1,9 +1,9 @@
-goog.module('js.ui.List');
+goog.module('stack.ui.List');
 
-const Component = goog.require('js.ui.Component');
+const Component = goog.require('stack.ui.Component');
 const dom = goog.require('goog.dom');
 const soy = goog.require('goog.soy');
-const ui = goog.require('soy.js.ui');
+const ui = goog.require('soy.stack.ui');
 
 class List extends Component {
   

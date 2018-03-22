@@ -1,9 +1,9 @@
 /**
  * @fileoverview
  */
-goog.module('js.ui.Template');
+goog.module('stack.ui.Template');
 
-const Component = goog.require('js.ui.Component');
+const Component = goog.require('stack.ui.Component');
 const soy = goog.require('goog.soy');
 
 /**

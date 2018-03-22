@@ -1,4 +1,4 @@
-# ================================================================
+workspace(name = "build_stack_ui_js")
 
 http_archive(
     name = "io_bazel_rules_closure",

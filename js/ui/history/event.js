@@ -1,7 +1,7 @@
 /**
  * @fileoverview
  */
-goog.module('js.ui.history.Event');
+goog.module('stack.ui.history.Event');
 
 const GoogEvent =  goog.require('goog.events.Event');
 

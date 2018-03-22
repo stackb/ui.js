@@ -2,9 +2,9 @@
  * @fileoverview
  * @suppress {reportUnknownTypes}
  */
-goog.module('js.ui.Tabs');
+goog.module('stack.ui.Tabs');
 
-const Select =  goog.require('js.ui.Select');
+const Select =  goog.require('stack.ui.Select');
 const TagName =  goog.require('goog.dom.TagName');
 const asserts =  goog.require('goog.asserts');
 const classlist =  goog.require('goog.dom.classlist');
@@ -17,17 +17,17 @@ const dom = goog.require('goog.dom');
 class Tabs extends Select {
 
   /**
-   * @param {!HTMLElement} menuElement
-   * @param {?string=} opt_defaultTabName
    * @param {?dom.DomHelper=} opt_domHelper
+   * @param {?HTMLElement=} opt_menuElement
+   * @param {?string=} opt_defaultTabName
    */
-  constructor(menuElement, opt_defaultTabName, opt_domHelper) {
+  constructor(opt_domHelper, opt_menuElement, opt_defaultTabName) {
     super(opt_domHelper);
 
     /**
-     * @private @type {!HTMLElement}
+     * @private @type {?HTMLElement}
      */
-    this.menuElement_ = menuElement;
+    this.menuElement_ = opt_menuElement || null;
 
     /**
      * @private @type {string}
@@ -35,6 +35,54 @@ class Tabs extends Select {
     this.defaultTabName_ = opt_defaultTabName || "";
   }
 
+
+  /**
+   * @override
+   */
+  enterDocument() {
+    super.enterDocument();
+    if (!this.menuElement_) {
+      this.menuElement_ = this.insertMenuElement();
+    }
+  }
+
+  
+  /**
+   * Add the menu element if one was not provided to the constructor.
+   * @return {!HTMLElement}
+   */
+  insertMenuElement() {
+    const menu = this.createMenuElement();
+    const el = this.getElementStrict();
+    dom.insertChildAt(el, menu, 0);
+    return menu;
+  }
+  
+
+  /**
+   * @return {!HTMLElement}
+   */
+  createMenuElement() {
+    return /** @type{!HTMLElement} */(this.getDomHelper().createDom(TagName.DIV, this.getMenuElementClass()));
+  }
+
+  
+  /**
+   * @return {string}
+   */
+  getMenuElementClass() {
+    return 'ui menu';
+  }
+  
+  
+  /**
+   * @return {?HTMLElement}
+   */
+  getMenuElement() {
+    return this.menuElement_;
+  }
+
+  
   /**
    * @override
    */
@@ -87,7 +135,7 @@ class Tabs extends Select {
   
   /**
    * @param {string} name
-   * @param {!js.ui.Component} c
+   * @param {!stack.ui.Component} c
    * @return {!HTMLElement}
    */
   createItemElement(name, c) {
