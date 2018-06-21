@@ -10,7 +10,9 @@ closure_js_library(
         "history/event.js",
         "select.js",
         "menushield.js",
-        "tabs.js",        
+        "tab.js",      
+        "tabs.js",      
+        "injector.js",  
         "router.js",
         "keyboard.js",
         "template.js",
@@ -22,6 +24,7 @@ closure_js_library(
     ],
     deps = [
         "@io_bazel_rules_closure//closure/library",
+        "@io_bazel_rules_closure//closure/library/ui:all_js",
         "@io_bazel_rules_closure//closure/protobuf:jspb",
     ],
     #suppress = ["JSC_QUALIFIED_REFERENCE_TO_GOOG_MODULE",],

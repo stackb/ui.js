@@ -3,11 +3,13 @@ goog.module('stack.ui.App');
 const BzlHistory = goog.require('stack.ui.History');
 const Component = goog.require('stack.ui.Component');
 const HEventType =  goog.require('goog.history.EventType');
+const Injector =  goog.require('stack.ui.Injector');
 const Keyboard = goog.require('stack.ui.Keyboard');
 const Promise_ =  goog.require('goog.Promise');
 const Router =  goog.require('stack.ui.Router');
 const asserts =  goog.require('goog.asserts');
 const dom =  goog.require('goog.dom');
+const objects =  goog.require('goog.object');
 
 
 class App extends Component {
@@ -17,23 +19,29 @@ class App extends Component {
    */
   constructor(opt_domHelper) {
     super(opt_domHelper);
+
+    /**
+     * @const @private
+     * @type {!Injector}
+     */
+    this.injector_ = new Injector();
     
     /**
      * A registry of components that can be accessed by a common name.
-     * @private
+     * @const @private
      * @type {!Object<string,!Component>}
      */
     this.components_ = {};
 
-    /** @private @type {!BzlHistory} */
+    /** @const @private @type {!BzlHistory} */
     this.history_ = new BzlHistory();
     this.getHandler().listen(this.history_, HEventType.NAVIGATE, this.handleHistoryNavigate);
     this.registerDisposable(this.history_);
-    /** @private @type {!Keyboard} */
+    /** @const @private @type {!Keyboard} */
     this.kbd_ = new Keyboard();
     this.registerDisposable(this.kbd_);
 
-    /** @private @type {!Router} */
+    /** @const @private @type {!Router} */
     var router = this.router_ = new Router(this, this.history_);
     this.registerDisposable(router);
 
@@ -59,9 +67,9 @@ class App extends Component {
    */
   setLoading(c, b) {
     if (b) {
-      console.log("Starting Loading " + c.getPathUrl());
+      console.warn("Starting Loading " + c.getPathUrl());
     } else {
-      console.log("Stop Loaded " + c.getPathUrl());
+      console.warn("Stop Loaded " + c.getPathUrl());
     }
   }
   
@@ -77,6 +85,13 @@ class App extends Component {
    */
   getRouter() {
     return this.router_;
+  }
+
+  /**
+   * @return {!Injector}
+   */
+  getInjector() {
+    return this.injector_;
   }
   
   /**
@@ -163,7 +178,7 @@ class App extends Component {
   /** @override */
   disposeInternal() {
     super.disposeInternal();
-    delete this.components_;
+    objects.clear(this.components_);
   }
 
 }

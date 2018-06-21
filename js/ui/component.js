@@ -243,7 +243,7 @@ class Component extends GoogUiComponent {
     var url = `url(${src})`;
     style.backgroundImage = url;
     style.backgroundSize = 'cover';
-    style.backgroundOpacity = '0.3';
+    //style.backgroundOpacity = '0.3';
     style.backgroundPosition = 'center center';
     style.height = '100%';
   }

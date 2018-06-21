@@ -17,7 +17,7 @@ class Route extends EventTarget {
   constructor(path) {
     super();
 
-    /** @private @type {!Array<!string>} */
+    /** @const @private @type {!Array<!string>} */
     this.path_ = asserts.assertArray(path);
 
     /** @private @type {number} */
@@ -32,7 +32,7 @@ class Route extends EventTarget {
     /** @private @type {string|undefined} */
     this.failReason_ = undefined;
 
-    /** @private @type {!goog.promise.Resolver<!stack.ui.Route>} */
+    /** @const @private @type {!goog.promise.Resolver<!stack.ui.Route>} */
     this.resolver_ = Promise_.withResolver();
 
   }
@@ -42,6 +42,13 @@ class Route extends EventTarget {
    */
   getPromise() {
     return this.resolver_.promise;
+  }
+
+  /**
+   * @return {number}
+   */
+  size() {
+    return this.path_.length;
   }
 
   /**
@@ -58,6 +65,27 @@ class Route extends EventTarget {
     return this.path_;
   }
 
+  /**
+   * Get the path segment at the given index.
+   *
+   * @param {number} index
+   * @return {?string}
+   */
+  at(index) {
+    return this.path_[index] || null;
+  }
+
+  /**
+   * Get the path segment at the given index.
+   *
+   * @param {number} n
+   * @return {!Route}
+   */
+  advance(n) {
+    this.index_ += n;
+    return this;
+  }
+  
   /**
    * Add a path segment to the end of the route.
    * 
@@ -79,7 +107,7 @@ class Route extends EventTarget {
     index = goog.isNumber(index) ? index : this.index_ - 1;
     return this.progress_[index] || null;
   }
-
+  
   /**
    * @return {string}
    */
@@ -88,10 +116,13 @@ class Route extends EventTarget {
   }
 
   /**
+   * @param {?number=} opt_max
    * @return {!Array<string>}
    */
-  unmatchedPath() {
-    return this.path_.slice(this.progress_.length);
+  unmatchedPath(opt_max) {
+    const size = this.size();
+    const end = goog.isNumber(opt_max) ? this.index_ + opt_max : size;
+    return this.path_.slice(this.index_, end);
   }
 
   /**
@@ -100,8 +131,8 @@ class Route extends EventTarget {
    *
    * @return {!Array<string>}
    */
-  pathMatched() {
-    return this.path_.slice(0, this.progress_.length);
+  matchedPath() {
+    return this.path_.slice(0, this.index_);
   }
 
   // /** Peek at the next path segment.
@@ -136,6 +167,7 @@ class Route extends EventTarget {
    * @return {boolean}
    */
   didFail() {
+    console.log("route state: ", this.state_);
     return this.state_ === Route.EventType.FAIL || this.state_ === Route.EventType.TIMEOUT;
   }
 
@@ -183,7 +215,7 @@ class Route extends EventTarget {
     this.assertInProgress();
     var index = this.index_++;
     this.progress_[index] = component;
-    //console.log('progress made: ' + this.path_[index] + '=', component);
+    //console.log(`progress made: ${index}, ${this.path_[index]} ${this.unmatchedPath()}`, component);
     component.show();
     this.notifyEvent(Route.EventType.PROGRESS, component);
   }

@@ -22,7 +22,7 @@ class Select extends Component {
     /**
      * A mapping from tab name to component id.
      *
-     * @private @type {!Object<string,string>}
+     * @const @private @type {!Object<string,string>}
      */
     this.name2id_ = {};
 
@@ -76,8 +76,8 @@ class Select extends Component {
     if (tab) {
       this.hideCurrent();
       this.current_ = name;
-      var path = this.getPath();
-      path.push(name);
+      //var path = this.getPath();
+      //path.push(name);
       tab.show();
     }
     return tab;
@@ -112,13 +112,12 @@ class Select extends Component {
     return Object.keys(this.name2id_);
   }
 
-
   /**
    * @override
    */
   goDown(route) {
     var name = route.peek();
-    //console.log('goDown("' + name + '")', this);
+    //console.log('select.goDown("' + name + '")', this);
     if (name) {
       this.select(name, route);
     } else {

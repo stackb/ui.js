@@ -26,10 +26,10 @@ class History extends EventTarget {
   constructor() {
     super();
 
-    /** @private @type {?string} */
+    /** @const @private @type {?string} */
     this.current_ = null;
 
-    /** @private @type {!Html5History} */
+    /** @const @private @type {!Html5History} */
     var history = this.history_ = new Html5History();
     history.setUseFragment(false);
 
@@ -49,13 +49,13 @@ class History extends EventTarget {
    * @suppress {reportUnknownTypes}
    */
   handleDocumentClick(e) {
-    console.log("history; click!");
+    //console.log("history; click!");
 
     // Element that was clicked could be a child of of the <a>, so
     // look up through the ancestry chain.
     let anchor = /** @type {?HTMLAnchorElement} */ (
       dom.getAncestor(asserts.assertElement(e.target),
-                      el => el.tagName === TagName.A.toString(),
+                      /** !Element */el => el.tagName === TagName.A.toString(),
                       true)
     );
     if (!anchor) {
@@ -65,11 +65,9 @@ class History extends EventTarget {
     if (!hash) {
       return;
     }
-    console.log("history; hash", hash);
     if (!strings.startsWith(hash, '#/')) {
       return;
     }
-    console.log("History: ehh?");
     e.preventDefault();
     e.stopPropagation();
     hash = hash.substring(2);
@@ -105,7 +103,7 @@ class History extends EventTarget {
     var target = this.history_.getToken();
     target = decodeURIComponent(target);
 
-    console.log("handleNavigate target=", target, this.history_.getToken());
+    //console.log("handleNavigate target=", target, this.history_.getToken());
     if (target != this.current_) {
       this.dispatchEvent(e);
     } else {

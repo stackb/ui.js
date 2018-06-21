@@ -19,10 +19,10 @@ class Template extends Component {
   constructor(template, opt_args, opt_domHelper) {
     super(opt_domHelper);
 
-    /** @private @type {!Function} */
+    /** @const @private @type {!Function} */
     this.template_ = template;
 
-    /** @private @type {!Object|undefined} */
+    /** @const @private @type {!Object|undefined} */
     this.args_ = opt_args || undefined;
   }
 

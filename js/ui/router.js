@@ -32,21 +32,21 @@ class Router extends EventTarget {
     super();
 
     /**
-     * @private
+     * @const @private
      * @type {!EventHandler}
      */
     this.handler_ = new EventHandler(this);
 
     /**
      * The root component to start.
-     * @private
+     * @const @private
      * @type {!Component}
      */
     this.root_ = root;
 
     // /**
     //  * The root component to start.
-    //  * @private
+    //  * @const @private
     //  * @type {!Object<!History_>}
     //  */
     // this.history_ = history;
@@ -114,7 +114,7 @@ class Router extends EventTarget {
    * @return {!Promise_<!Route>}
    */
   go(path) {
-    console.log('go: ' + path);
+    //console.log('go: ' + path);
     asserts.assertString(path, 'Routing path must be a string');
     if (this.route_) {
       console.warn(`cannot route to ${path} due to existing route`, this.route_);
@@ -142,25 +142,26 @@ class Router extends EventTarget {
       if (route.inProgress()) {
         route.timeout();
       }
-    }, 10000);
+    }, 100000);
 
     return route.getPromise();
   }
 
   /** @param {!RouteEvent} e */
   handleProgress(e) {
-    console.log(e.target.index() + '. Progress ' + e.target.pathMatched(), e.component);
+    //console.log(e.target.index() + '. Progress ' + e.target.pathMatched(), e.component);
   }
 
   /** @param {!RouteEvent} e */
   handleDone(e) {
-    console.log('Done! ' + e.target.pathMatched(), e.component);
+    //console.log('Done! ' + e.target.matchedPath(), e.component);
     this.unlistenRoute();
   }
 
   /** @param {!RouteEvent} e */
   handleFail(e) {
-    console.warn('Route Failed: ' + e.target.getFailReason());
+    const target = /** @type {!Route} */(e.target);
+    console.warn('Route Failed: ' + target.getFailReason());
     this.unlistenRoute();
   }
 

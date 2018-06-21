@@ -10,7 +10,7 @@ class Keyboard extends Disposable {
   constructor() {
     super();
 
-    /** @private @type {!Object<string,!Array<!function(!KeyboardShortcutEvent)>>} */
+    /** @const @private @type {!Object<string,!Array<!function(!KeyboardShortcutEvent)>>} */
     this.callbacks_ = {};
 
     /** @private @type {!KeyboardShortcutHandler} */
