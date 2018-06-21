@@ -30,7 +30,7 @@ class Tabs extends Select {
     this.menuElement_ = opt_menuElement || null;
 
     /**
-     * @private @type {string}
+     * @const @private @type {string}
      */
     this.defaultTabName_ = opt_defaultTabName || "";
   }

@@ -1,10 +1,15 @@
-workspace(name = "build_stack_ui_js")
+workspace(name = "com_github_stackb_ui_js")
+
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+# ================================================================
+
+RULES_CLOSURE_VERSION = "f4d0633f14570313b94822223039ebda0f398102"
 
 http_archive(
     name = "io_bazel_rules_closure",
-    url = "https://github.com/bazelbuild/rules_closure/archive/4af89ef1db659eb41f110df189b67d4cf14073e1.zip",
-    sha256 = "f73b1b3974e7639183e1646737d446d73a966ff57f853a896e19bcccc40e9b7b",
-    strip_prefix = "rules_closure-4af89ef1db659eb41f110df189b67d4cf14073e1",
+    url = "https://github.com/bazelbuild/rules_closure/archive/%s.zip" % RULES_CLOSURE_VERSION,
+    strip_prefix = "rules_closure-%s" % RULES_CLOSURE_VERSION,
 )
 
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")

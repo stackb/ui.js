@@ -21,7 +21,7 @@ class Tab extends Select {
     /**
      * A mapping from tab name to component id.
      *
-     * @private @type {function(string,!stack.ui.Route)}
+     * @const @private @type {function(string,!stack.ui.Route)}
      */
     this.failHandler_ = failHandler;
 
