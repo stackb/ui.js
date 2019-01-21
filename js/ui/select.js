@@ -5,7 +5,16 @@
 goog.module('stack.ui.Select');
 
 const Component =  goog.require('stack.ui.Component');
+const ItemEvent =  goog.require('goog.ui.ItemEvent');
 const asserts =  goog.require('goog.asserts');
+const dom =  goog.require('goog.dom');
+const soy =  goog.require('goog.soy');
+
+/**
+ * @private
+ * @type {?Function}
+ */
+let defaultFailTemplate_ = null;
 
 /**
  * Component with routing capability such that only one named child
@@ -14,7 +23,7 @@ const asserts =  goog.require('goog.asserts');
 class Select extends Component {
 
   /**
-   * @param {?goog.dom.DomHelper=} opt_domHelper
+   * @param {?dom.DomHelper=} opt_domHelper
    */
   constructor(opt_domHelper) {
     super(opt_domHelper);
@@ -63,9 +72,9 @@ class Select extends Component {
     c.hide();
     this.registerDisposable(c);
     this.prev_ = name;
+    this.dispatchEvent(new ItemEvent('tab-added', c, null));
     return c;
   }
-
 
   /**
    * @param {string} name
@@ -74,13 +83,20 @@ class Select extends Component {
   showTab(name) {
     var tab = this.getTab(name);
     if (tab) {
-      this.hideCurrent();
-      this.current_ = name;
-      //var path = this.getPath();
-      //path.push(name);
-      tab.show();
+      this.showTabInternal(name, tab);
     }
     return tab;
+  }
+
+  /**
+   * @private
+   * @param {string} name
+   * @param {!Component} tab
+   */
+  showTabInternal(name, tab) {
+    this.hideCurrent();
+    this.current_ = name;
+    tab.show();
   }
 
   /**
@@ -93,6 +109,14 @@ class Select extends Component {
       this.child(this.name2id_[name])
     );
     return tab;
+  }
+
+  /**
+   * @param {string} name
+   * @return {boolean}
+   */
+  hasTab(name) {
+    return goog.isDefAndNotNull(this.getTab(name));
   }
 
   /**
@@ -117,7 +141,7 @@ class Select extends Component {
    */
   goDown(route) {
     var name = route.peek();
-    //console.log('select.goDown("' + name + '")', this);
+    //console.log('select.goDown("' + name + '")' + this.getTabNames(), this.name2id_);
     if (name) {
       this.select(name, route);
     } else {
@@ -128,7 +152,6 @@ class Select extends Component {
       }
     }
   }
-
   
   /**
    * @param {string} name
@@ -150,9 +173,63 @@ class Select extends Component {
    * @param {!stack.ui.Route} route
    */
   selectFail(name, route) {
-    route.fail(this, 'No tab for ' + name + ' in ' + JSON.stringify(this.name2id_));
-    this.getApp().handle404(route);
+    const message = `No route to "${name}" from /${route.matchedPath().join("/")}`;
+    if (defaultFailTemplate_) {
+      this.fail(name, route, defaultFailTemplate_, {
+        name: name,
+        matched: route.matchedPath(),
+        code: 404,
+        message: message,
+      });
+      return;
+    }
+    route.fail(this, message);
+    const fail = this.getFailTab();
+    fail.renderText(message);
+    this.showTabInternal("__fail__", fail); // TODO: use 'name' here?
   }
+
+  /**
+   * Render a failed component, using the given soy template and data.
+   * @param {string} name
+   * @param {!stack.ui.Route} route
+   * @param {?function(ARG_TYPES, ?Object<string, *>=):*|?function(ARG_TYPES, null=, ?Object<string, *>=):*} template The Soy template defining the element's content.
+   * @param {ARG_TYPES=} opt_templateData The data for the template.
+   * @param {?Object=} opt_injectedData The injected data for the template.
+   * @template ARG_TYPES
+   */
+  fail(name, route, template, opt_templateData, opt_injectedData) {
+    const message = `No route to "${name}" from /${route.matchedPath()}`;
+    route.fail(this, message);
+    this.showError(template, opt_templateData, opt_injectedData);
+  }
+
+  /**
+   * Render a failed component, using the given soy template and data.
+   * @param {?function(ARG_TYPES, ?Object<string, *>=):*|?function(ARG_TYPES, null=, ?Object<string, *>=):*} template The Soy template defining the element's content.
+   * @param {ARG_TYPES=} opt_templateData The data for the template.
+   * @param {?Object=} opt_injectedData The injected data for the template.
+   * @template ARG_TYPES
+   */
+  showError(template, opt_templateData, opt_injectedData) {
+    const fail = this.getFailTab();
+    fail.renderTemplate(template, opt_templateData, opt_injectedData);
+    this.showTabInternal("__fail__", fail);
+  }
+
+  /**
+   * Get the special tab for routing failure.
+   * @private
+   * @return {!FailComponent}
+   */
+  getFailTab() {
+    let tab = this.getTab("__fail__");
+    if (!tab) {
+      tab = this.addTab("__fail__", new FailComponent());
+    } 
+    return /** @type {!FailComponent} */(tab);
+  }
+
 
   
   /**
@@ -187,5 +264,46 @@ class Select extends Component {
   }
   
 }
+
+class FailComponent extends Component {
+
+  /**
+   * @param {?dom.DomHelper=} opt_domHelper
+   */
+  constructor(opt_domHelper) {
+    super(opt_domHelper);
+  }
+
+  /** 
+   * Render the given fail message.
+   * 
+   * @param {?function(ARG_TYPES, ?Object<string, *>=):*|?function(ARG_TYPES, null=, ?Object<string, *>=):*} template The Soy template defining the element's content.
+   * @param {ARG_TYPES=} opt_templateData The data for the template.
+   * @param {?Object=} opt_injectedData The injected data for the template.
+   * @template ARG_TYPES
+   * */
+  renderTemplate(template, opt_templateData, opt_injectedData) {
+    soy.renderElement(this.getElement(), template, opt_templateData, opt_injectedData);
+  }
+
+  /** 
+   * Render the given fail message 
+   * 
+   * @param {string} message
+   * */
+  renderText(message) {
+    const el = this.getElementStrict();
+    dom.removeChildren(el);
+    dom.append(el, dom.createTextNode(message));
+  }
+
+}
+
+/**
+ * @param {?Function} t 
+ */
+Select.setDefaultFailTemplate = function(t) {
+  defaultFailTemplate_ = t;
+};
 
 exports = Select;

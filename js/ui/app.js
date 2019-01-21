@@ -1,5 +1,7 @@
 goog.module('stack.ui.App');
 
+const AppEvent = goog.require('stack.ui.app.Event');
+const AppEventType = goog.require('stack.ui.app.EventType');
 const BzlHistory = goog.require('stack.ui.History');
 const Component = goog.require('stack.ui.Component');
 const HEventType =  goog.require('goog.history.EventType');
@@ -65,7 +67,7 @@ class App extends Component {
    * @param {!Component} c
    * @param {!boolean} b
    */
-  setLoading(c, b) {
+  setComponentLoading(c, b) {
     if (b) {
       console.warn("Starting Loading " + c.getPathUrl());
     } else {
@@ -142,7 +144,8 @@ class App extends Component {
   
   /** @param {!stack.ui.Route} route */
   handle404(route) {
-    this.notifyError("404 (Not Found): " + route.getPath());
+    this.dispatchEvent(new AppEvent(AppEventType.NOT_FOUND, route));
+    this.notifyError("Not Found: " + route.getPath());
   }
 
   /**

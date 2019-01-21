@@ -117,10 +117,10 @@ class Router extends EventTarget {
     //console.log('go: ' + path);
     asserts.assertString(path, 'Routing path must be a string');
     if (this.route_) {
-      console.warn(`cannot route to ${path} due to existing route`, this.route_);
-      return Promise_.reject(
-        'Already routing to ' + this.route_.getPath()
-      );
+      console.warn(`override ${path} due to existing route: ` + this.route_.getPath());
+      // return Promise_.reject(
+      //   'Already routing to ' + this.route_.getPath()
+      // );
     }
 
     // Remove empty path segments
@@ -150,11 +150,13 @@ class Router extends EventTarget {
   /** @param {!RouteEvent} e */
   handleProgress(e) {
     //console.log(e.target.index() + '. Progress ' + e.target.pathMatched(), e.component);
+    this.dispatchEvent(e);
   }
 
   /** @param {!RouteEvent} e */
   handleDone(e) {
     //console.log('Done! ' + e.target.matchedPath(), e.component);
+    this.dispatchEvent(e);
     this.unlistenRoute();
   }
 
@@ -162,12 +164,14 @@ class Router extends EventTarget {
   handleFail(e) {
     const target = /** @type {!Route} */(e.target);
     console.warn('Route Failed: ' + target.getFailReason());
+    this.dispatchEvent(e);
     this.unlistenRoute();
   }
 
   /** @param {!RouteEvent} e */
   handleTimeout(e) {
     console.warn('Route Timeout', e);
+    this.dispatchEvent(e);
     this.unlistenRoute();
   }
 

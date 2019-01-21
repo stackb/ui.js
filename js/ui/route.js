@@ -3,6 +3,7 @@ goog.module('stack.ui.Route');
 const Event =  goog.require('stack.ui.route.Event');
 const EventTarget = goog.require('goog.events.EventTarget');
 const Promise_ = goog.require('goog.Promise');
+const arrays = goog.require('goog.array');
 const asserts = goog.require('goog.asserts');
 
 /**
@@ -94,6 +95,42 @@ class Route extends EventTarget {
    */
   add(segment) {
     this.path_.push(segment);
+    return this;
+  }  
+
+
+  /**
+   * Splice out a path segment into the current position of the route.
+   * 
+   * @param {number=} opt_index
+   * @return {!Route}
+   */
+  remove(opt_index) {
+    arrays.removeAt(this.path_, goog.isNumber(opt_index) ? opt_index : this.index_);
+    return this;
+  }  
+
+  /**
+   * Splice a path segment into the current position of the route.
+   * 
+   * @param {string} segment
+   * @param {number=} opt_index
+   * @return {!Route}
+   */
+  insert(segment, opt_index) {
+    arrays.insertAt(this.path_, segment, goog.isNumber(opt_index) ? opt_index : this.index_);
+    return this;
+  }  
+
+  /**
+   * Set the path segment at the given position.
+   * 
+   * @param {string} segment
+   * @param {number=} opt_index
+   * @return {!Route}
+   */
+  set(segment, opt_index) {
+    this.path_[goog.isNumber(opt_index) ? opt_index : this.index_] = segment;
     return this;
   }  
   

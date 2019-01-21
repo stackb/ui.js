@@ -5,6 +5,7 @@
 goog.module('stack.ui.Component');
 
 const BgColorTransform = goog.require('goog.fx.dom.BgColorTransform');
+const EventType =  goog.require('goog.ui.Component.EventType');
 const GoogUiComponent = goog.require('goog.ui.Component');
 const asserts = goog.require('goog.asserts');
 const easing = goog.require('goog.fx.easing');
@@ -171,7 +172,25 @@ class Component extends GoogUiComponent {
     return /** @type {!stack.ui.App} */ (this.getRoot());
   }
 
-  
+  /**
+   * Get a list of menu items that should be displayed for this component.
+   * 
+   * @return {?Array<!goog.ui.MenuItem>}  
+   */
+  getMenuItems() {
+    return null;
+  }
+
+  /**
+   * Get the list of keyboard shortcuts this component responds to.
+   * Default is null, no shortcuts.
+   * 
+   * @return {?Array<?>}  
+   */
+  getKeyboardShortcuts() {
+    return null;
+  }
+
   /**
    * Default is no-op.
    */
@@ -183,13 +202,7 @@ class Component extends GoogUiComponent {
    */
   show() {
     style.setElementShown(this.getShowHideElement(), true);
-  }
-
-  /**
-   * Flash this component.
-   */
-  flash() {
-    style.setElementShown(this.getShowHideElement(), true);
+    this.dispatchEvent(EventType.SHOW);
   }
 
   /**
@@ -197,7 +210,16 @@ class Component extends GoogUiComponent {
    */
   hide() {
     style.setElementShown(this.getShowHideElement(), false);
+    this.dispatchEvent(EventType.HIDE);
   }
+
+  /**
+   * Set the progress state of the component.
+   * @param {boolean} b
+   */
+  setLoading(b) {
+  }
+
 
   /**
    * @return {!Element}

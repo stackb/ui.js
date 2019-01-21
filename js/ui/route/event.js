@@ -15,12 +15,12 @@ class Event extends GEvent {
     super(type, target);
 
     /**
-     * @type {!stack.ui.Route}
+     * @public @const @type {!stack.ui.Route}
      */
     this.route = target;
     
     /**
-     * @type {?stack.ui.Component|undefined}
+     * @public @const @type {?stack.ui.Component|undefined}
      */
     this.component = component;
   }

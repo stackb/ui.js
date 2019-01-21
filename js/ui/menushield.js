@@ -13,10 +13,9 @@ class MenuShield extends Component {
   
   /**
    * @param {!goog.ui.Container} menuBar
-   * @param {!Map<!Menu,!MenuButton>} menuButtons
    * @param {?dom.DomHelper=} opt_domHelper
    */
-  constructor(menuBar, menuButtons, opt_domHelper) {
+  constructor(menuBar, opt_domHelper) {
     super(opt_domHelper);
 
     /**
@@ -25,16 +24,22 @@ class MenuShield extends Component {
      */    
     this.menuBar_ = menuBar;
 
-    /**
-     * A mapping from menu to the parent menubutton. 
-     *
-     * @const @private
-     * @type {!Map<!Menu,!MenuButton>}
-     */    
-    this.menuButtons_ = menuButtons;
+    // /**
+    //  * A mapping from menu to the parent menubutton. 
+    //  *
+    //  * @private
+    //  * @type {?Map<!Menu,!MenuButton>}
+    //  */    
+    // this.menuButtons_ = null;
   }
 
-  
+  // /**
+  //  * @param {!Map<!Menu,!MenuButton>} map
+  //  */
+  // setMenuButtonMap(map) {
+  //   this.menuButtons_ = map;
+  // }
+
   /**
    * @override
    */
@@ -78,8 +83,9 @@ class MenuShield extends Component {
    */
   move(menu) {
     const shield = this.getElementStrict();
-    const button = this.menuButtons_.get(menu);
-    asserts.assert(button);
+    //const button = this.menuButtons_.get(menu); // JUST get the parent!!!
+    const button = /** @type {!MenuButton} */(menu.getParent()); 
+    asserts.assert(button, "button not found");
 
     const e = button.getElement();
 

@@ -35,7 +35,6 @@ class Tabs extends Select {
     this.defaultTabName_ = opt_defaultTabName || "";
   }
 
-
   /**
    * @override
    */
@@ -45,7 +44,6 @@ class Tabs extends Select {
       this.menuElement_ = this.insertMenuElement();
     }
   }
-
   
   /**
    * Add the menu element if one was not provided to the constructor.
@@ -58,7 +56,6 @@ class Tabs extends Select {
     return menu;
   }
   
-
   /**
    * @return {!HTMLElement}
    */
@@ -66,15 +63,13 @@ class Tabs extends Select {
     return /** @type{!HTMLElement} */(this.getDomHelper().createDom(TagName.DIV, this.getMenuElementClass()));
   }
 
-  
   /**
    * @return {string}
    */
   getMenuElementClass() {
     return 'ui menu';
   }
-  
-  
+    
   /**
    * @return {?HTMLElement}
    */
@@ -82,7 +77,6 @@ class Tabs extends Select {
     return this.menuElement_;
   }
 
-  
   /**
    * @override
    */

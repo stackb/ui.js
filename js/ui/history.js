@@ -49,14 +49,18 @@ class History extends EventTarget {
    * @suppress {reportUnknownTypes}
    */
   handleDocumentClick(e) {
-    //console.log("history; click!");
+    console.log("history; click!");
 
     // Element that was clicked could be a child of of the <a>, so
     // look up through the ancestry chain.
     let anchor = /** @type {?HTMLAnchorElement} */ (
-      dom.getAncestor(asserts.assertElement(e.target),
-                      /** !Element */el => el.tagName === TagName.A.toString(),
-                      true)
+      dom.getAncestor(asserts.assertElement(e.target), node => { 
+        if (!(node instanceof HTMLElement)) {
+          return false;
+        }
+        const el = /** @type {!HTMLElement} */(node);
+        return el.tagName === TagName.A.toString();
+      }, true)
     );
     if (!anchor) {
       return;

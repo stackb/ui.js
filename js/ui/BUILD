@@ -6,6 +6,7 @@ closure_js_library(
     name = "ui",
     srcs = [
         "app.js",
+        "eventtype.js",
         "history.js",
         "history/event.js",
         "select.js",

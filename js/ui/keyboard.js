@@ -22,6 +22,14 @@ class Keyboard extends Disposable {
   }
 
   /**
+   * Set the enabled status.
+   * @param {boolean} b 
+   */
+  setEnabled(b) {
+    this.shortcuts_.setAllShortcutsAreGlobal(b);
+  }
+
+  /**
    * @param {!function(!KeyboardShortcutEvent)} callback
    * @param {string} identifier Identifier for the task performed by the keyboard
    *                 combination. Multiple shortcuts can be provided for the same
@@ -47,6 +55,13 @@ class Keyboard extends Disposable {
     for (let c of this.callbacks_[e.identifier]) {
       c(e);
     }
+  }
+
+  /**
+   * Unregisters all shortcuts
+   */
+  removeAll() {
+    this.shortcuts_.unregisterAll();
   }
 
   /** @override */
