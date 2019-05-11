@@ -1,8 +1,8 @@
-goog.module('js.ui.RouteTest');
-goog.setTestOnly('js.ui.RouteTest');
+goog.module('stack.ui.RouteTest');
+goog.setTestOnly('stack.ui.RouteTest');
 
-const Route = goog.require('js.ui.Route');
-const Select = goog.require('js.ui.Select');
+const Route = goog.require('stack.ui.Route');
+const Select = goog.require('stack.ui.Select');
 const jsunit = goog.require('goog.testing.jsunit');
 const testSuite = goog.require('goog.testing.testSuite');
 
@@ -19,7 +19,6 @@ testSuite({
     const child = new Select();
     root.addTab('foo', parent);
     parent.addTab('bar', child);
-    root.render(document.body); // why this needed?
 
     assertEquals(0, route.index());
     root.go(route);
@@ -39,10 +38,10 @@ testSuite({
     const child = new Select();
     root.addTab('foo', parent);
     parent.addTab('bar', child);
-    //root.render(document.body); 
+    root.render(document.body); 
     assertNotNull(route);
     assertEquals(0, route.index());
-    //try {
+
     root.go(route);
 
     assertNull('First component root has no name', route.get(0).getName());

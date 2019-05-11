@@ -32,7 +32,7 @@ closure_js_library(
 
 closure_js_test(
     name = "component_test",
-    entry_points = ["goog:js.ui.ComponentTest"],
+    entry_points = ["goog:stack.ui.ComponentTest"],
     srcs = [
         "component_test.js",
     ],
@@ -45,7 +45,7 @@ closure_js_test(
 
 closure_js_test(
     name = "route_test",
-    entry_points = ["goog:js.ui.RouteTest"],
+    entry_points = ["goog:stack.ui.RouteTest"],
     srcs = [
         "route_test.js",
     ],
@@ -61,7 +61,7 @@ closure_js_test(
 
 closure_js_test(
     name = "select_test",
-    entry_points = ["goog:js.ui.SelectTest"],
+    entry_points = ["goog:stack.ui.SelectTest"],
     srcs = [
         "select_test.js",
     ],
@@ -74,7 +74,7 @@ closure_js_test(
 
 closure_js_test(
     name = "history_test",
-    entry_points = ["goog:js.ui.HistoryTest"],
+    entry_points = ["goog:stack.ui.HistoryTest"],
     srcs = [
         "history_test.js",
     ],

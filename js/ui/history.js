@@ -55,7 +55,7 @@ class History extends EventTarget {
     // look up through the ancestry chain.
     let anchor = /** @type {?HTMLAnchorElement} */ (
       dom.getAncestor(asserts.assertElement(e.target),
-                      /** !Element */el => el.tagName === TagName.A.toString(),
+                      el => el instanceof HTMLElement && el.tagName === TagName.A.toString(),
                       true)
     );
     if (!anchor) {

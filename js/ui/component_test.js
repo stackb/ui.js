@@ -2,9 +2,8 @@
 goog.module('stack.ui.ComponentTest');
 goog.setTestOnly('stack.ui.ComponentTest');
 
-const UiComponent = goog.require('stack.ui.Component');
 const Route = goog.require('stack.ui.Route');
-const classlist = goog.require('goog.dom.classlist');
+const UiComponent = goog.require('stack.ui.Component');
 const jsunit = goog.require('goog.testing.jsunit');
 const testSuite = goog.require('goog.testing.testSuite');
 
@@ -33,15 +32,6 @@ testSuite({
     c.hide();
     c.show();
     assertEquals('', c.getElement().style.display);
-  },
-
-  testLoading: () => {
-    const c = new UiComponent();
-    c.render(document.body);
-    c.setLoading(true);
-    assertTrue(classlist.contains(c.getElementStrict(), 'loading'));
-    c.setLoading(false);
-    assertFalse(classlist.contains(c.getElementStrict(), 'loading'));
   },
 
   testPath: () => {
