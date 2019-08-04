@@ -1,6 +1,5 @@
 /**
  * @fileoverview
- * @suppress {reportUnknownTypes}
  */
 goog.module('stack.ui.Router');
 
@@ -8,15 +7,11 @@ const Component = goog.require('stack.ui.Component');
 const ComponentEventType = goog.require('goog.ui.Component.EventType');
 const EventHandler = goog.require('goog.events.EventHandler');
 const EventTarget = goog.require('goog.events.EventTarget');
-//const HEvent =  goog.require('stack.ui.history.Event');
-//const HEventType =  goog.require('goog.history.EventType');
 const History_ =  goog.require('stack.ui.History');
 const Promise_ =  goog.require('goog.Promise');
 const Route =  goog.require('stack.ui.Route');
 const RouteEvent =  goog.require('stack.ui.route.Event');
 const asserts =  goog.require('goog.asserts');
-//const events =  goog.require('goog.events');
-//const strings =  goog.require('goog.string');
 
 /**
  * Manages a current route in-progress.  Fires
@@ -44,14 +39,6 @@ class Router extends EventTarget {
      */
     this.root_ = root;
 
-    // /**
-    //  * The root component to start.
-    //  * @const @private
-    //  * @type {!Object<!History_>}
-    //  */
-    // this.history_ = history;
-    // //events.listen(this.history_, HEventType.NAVIGATE, this.handleHistoryNavigate.bind(this));
-
     /**
      * A route in-progress.
      * @private
@@ -69,43 +56,6 @@ class Router extends EventTarget {
   getCurrentRoute() {
     return this.route_;
   }
-
-  // /**
-  //  * Go to the current window location.
-  //  * @return {!Promise_<!Route>}
-  //  */
-  // goWindowLocation() {
-  //   var loc = window.location.pathname;
-  //   if (strings.startsWith(loc, '/')) {
-  //     loc = loc.substring(1);
-  //   }
-  //   return this.route(loc);
-  // }
-
-  // /**
-  //  * Route to the given path
-  //  * @param {string} path
-  //  * @return {!Promise_<!Route>} 
-  //  */
-  // route(path) {
-  //   console.log('route: ' + path);
-  //   asserts.assertString(path, 'Routing path must be a string');
-  //   if (this.route_) {
-  //     console.warn(`cannot route to ${path} due to existing route`, this.route_);
-  //     return Promise_.reject(
-  //       'Already routing to ' + this.route_.getPath()
-  //     );
-  //   }
-
-  //   // Remove empty path segments
-  //   const list = path.split('/').filter(s => s.trim() !== '');
-  //   list.unshift(''); // prepend empty segment for the root component to consume
-  //   var route = new Route(list);
-
-  //   this.history_.setToken(list.join("/"));
-  //   return route.getPromise();
-  // }
-
   
   /**
    * Get a component if registered.
@@ -188,6 +138,7 @@ class Router extends EventTarget {
     handler.unlisten(route, Route.EventType.PROGRESS, this.handleProgress, false, this);
     handler.unlisten(route, Route.EventType.DONE, this.handleDone, false, this);
     handler.unlisten(route, Route.EventType.FAIL, this.handleFail, false, this);
+    handler.unlisten(route, Route.EventType.TIMEOUT, this.handleTimeout, false, this);
   }
 
   /** @override */

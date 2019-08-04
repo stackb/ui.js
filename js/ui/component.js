@@ -1,10 +1,10 @@
 /**
  * @fileoverview
- * @suppress {reportUnknownTypes}
  */
 goog.module('stack.ui.Component');
 
 const BgColorTransform = goog.require('goog.fx.dom.BgColorTransform');
+const ComponentEventType = goog.require('goog.ui.Component.EventType');
 const GoogUiComponent = goog.require('goog.ui.Component');
 const asserts = goog.require('goog.asserts');
 const easing = goog.require('goog.fx.easing');
@@ -84,7 +84,6 @@ class Component extends GoogUiComponent {
    * @param {!stack.ui.Route} route
    */
   go(route) {
-    //console.info('go ' + route.getPath(), this);
     route.progress(this);
     if (route.atEnd()) {
       this.goHere(route);
@@ -183,6 +182,7 @@ class Component extends GoogUiComponent {
    */
   show() {
     style.setElementShown(this.getShowHideElement(), true);
+    this.dispatchEvent(ComponentEventType.SHOW);
   }
 
   /**
@@ -197,6 +197,7 @@ class Component extends GoogUiComponent {
    */
   hide() {
     style.setElementShown(this.getShowHideElement(), false);
+    this.dispatchEvent(ComponentEventType.HIDE);
   }
 
   /**

@@ -11,6 +11,7 @@ closure_js_library(
         "select.js",
         "menushield.js",
         "tab.js",      
+        "tabevent.js",      
         "tabs.js",      
         "injector.js",  
         "router.js",

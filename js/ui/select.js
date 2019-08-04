@@ -1,10 +1,10 @@
 /**
  * @fileoverview
- * @suppress {reportUnknownTypes}
  */
 goog.module('stack.ui.Select');
 
 const Component =  goog.require('stack.ui.Component');
+const TabEvent =  goog.require('stack.ui.TabEvent');
 const asserts =  goog.require('goog.asserts');
 
 /**
@@ -63,6 +63,7 @@ class Select extends Component {
     c.hide();
     this.registerDisposable(c);
     this.prev_ = name;
+    this.dispatchEvent(new TabEvent("tab-added", name, c));
     return c;
   }
 
@@ -115,6 +116,24 @@ class Select extends Component {
   /**
    * @override
    */
+  goHere(route) {
+    if (this.current_) {
+      this.select(this.current_, route);
+      return;
+    }
+    this.selectHere(route);
+  }
+
+  /**
+   * @param {!stack.ui.Route} route
+   */
+  selectHere(route) {
+    super.goHere(route);
+  }  
+
+  /**
+   * @override
+   */
   goDown(route) {
     var name = route.peek();
     //console.log('select.goDown("' + name + '")', this);
@@ -153,7 +172,6 @@ class Select extends Component {
     route.fail(this, 'No tab for ' + name + ' in ' + JSON.stringify(this.name2id_));
     this.getApp().handle404(route);
   }
-
   
   /**
    * Get the current tab.

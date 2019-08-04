@@ -2,7 +2,6 @@
  * A component for rendering lines in an svg thing.
  * 
  * @fileoverview 
- * suppress {reportUnknownTypes|checkTypes|undefinedVars} 
  */
 goog.module('bzl.ui.Timeline');
 

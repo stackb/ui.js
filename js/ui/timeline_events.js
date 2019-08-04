@@ -1,6 +1,5 @@
 /**
  * @fileoverview 
- * @suppress {reportUnknownTypes} 
  */
 goog.module('js.ui.TimelineEvents');
 

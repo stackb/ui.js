@@ -37,6 +37,7 @@ class App extends Component {
     this.history_ = new BzlHistory();
     this.getHandler().listen(this.history_, HEventType.NAVIGATE, this.handleHistoryNavigate);
     this.registerDisposable(this.history_);
+
     /** @const @private @type {!Keyboard} */
     this.kbd_ = new Keyboard();
     this.registerDisposable(this.kbd_);
@@ -44,7 +45,6 @@ class App extends Component {
     /** @const @private @type {!Router} */
     var router = this.router_ = new Router(this, this.history_);
     this.registerDisposable(router);
-
   }
 
   start() {
@@ -55,7 +55,6 @@ class App extends Component {
    * @param {!goog.history.Event} e
    */
   handleHistoryNavigate(e) {
-    //console.log('NAVIGATE2!', e);
     this.router_.go(e.token).thenCatch(err => {
       this.notifyError(`Routing failure while nagivating to ${e.token}`);
     });
@@ -161,7 +160,6 @@ class App extends Component {
    * @return {!Promise_<!stack.ui.Route>}
    */
   route(path) {
-    //console.log('App.route', path);
     return this.router_.go(path).thenCatch(err => {
       console.log(`Routing failure while routing to ${path}`);
     });
