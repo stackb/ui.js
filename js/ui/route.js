@@ -82,6 +82,7 @@ class Route extends EventTarget {
    * @return {!Route}
    */
   advance(n) {
+    // console.info(`Advance ${n} (index ${this.index_} -> ${this.index_ + n} / ${this.size()})`);
     this.index_ += n;
     return this;
   }
@@ -93,6 +94,7 @@ class Route extends EventTarget {
    * @return {!Route}
    */
   add(segment) {
+    // console.info(`Adding segment ${segment}`);
     this.path_.push(segment);
     return this;
   }  
@@ -153,7 +155,7 @@ class Route extends EventTarget {
    * @return {boolean}
    */
   atEnd() {
-    return this.index_ == this.path_.length;
+    return this.index_ >= this.path_.length;
   }
 
   /**
@@ -167,7 +169,7 @@ class Route extends EventTarget {
    * @return {boolean}
    */
   didFail() {
-    console.log("route state: ", this.state_);
+    // console.log("route state: ", this.state_);
     return this.state_ === Route.EventType.FAIL || this.state_ === Route.EventType.TIMEOUT;
   }
 
@@ -200,7 +202,7 @@ class Route extends EventTarget {
    * Trigger a timeout on the route.
    */
   timeout() {
-    console.log('timeout:', this);
+    // console.log('timeout:', this);
     this.state_ = Route.EventType.TIMEOUT;
     this.failReason_ = 'Timeout while navigating to ' + this.getPath();
     this.notifyEvent(Route.EventType.TIMEOUT, this.progress_[this.progress_.length - 1]);
@@ -224,7 +226,7 @@ class Route extends EventTarget {
    * @param {!stack.ui.Component} component
    */
   done(component) {
-    this.assertInProgress();
+    // this.assertInProgress();
     this.state_ = Route.EventType.DONE;
     this.notifyEvent(Route.EventType.DONE, component);
     this.resolver_.resolve(this);
@@ -236,7 +238,7 @@ class Route extends EventTarget {
    * @param {string=} opt_reason
    */
   fail(component, opt_reason) {
-    this.assertInProgress();
+    // this.assertInProgress();
     this.state_ = Route.EventType.FAIL;
     this.failReason_ = opt_reason || 'No route to ' + this.getPath();
     this.notifyEvent(Route.EventType.FAIL, component);

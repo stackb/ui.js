@@ -99,17 +99,20 @@ class Router extends EventTarget {
 
   /** @param {!RouteEvent} e */
   handleProgress(e) {
+    this.dispatchEvent(e);
     //console.log(e.target.index() + '. Progress ' + e.target.pathMatched(), e.component);
   }
 
   /** @param {!RouteEvent} e */
   handleDone(e) {
+    this.dispatchEvent(e);
     //console.log('Done! ' + e.target.matchedPath(), e.component);
     this.unlistenRoute();
   }
 
   /** @param {!RouteEvent} e */
   handleFail(e) {
+    this.dispatchEvent(e);
     const target = /** @type {!Route} */(e.target);
     console.warn('Route Failed: ' + target.getFailReason());
     this.unlistenRoute();

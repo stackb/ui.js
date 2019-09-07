@@ -13,10 +13,10 @@ class MenuShield extends Component {
   
   /**
    * @param {!goog.ui.Container} menuBar
-   * @param {!Map<!Menu,!MenuButton>} menuButtons
+   * @param {?Map<!Menu,!MenuButton>=} opt_menuButtons
    * @param {?dom.DomHelper=} opt_domHelper
    */
-  constructor(menuBar, menuButtons, opt_domHelper) {
+  constructor(menuBar, opt_menuButtons, opt_domHelper) {
     super(opt_domHelper);
 
     /**
@@ -31,10 +31,18 @@ class MenuShield extends Component {
      * @const @private
      * @type {!Map<!Menu,!MenuButton>}
      */    
-    this.menuButtons_ = menuButtons;
+    this.menuButtons_ = opt_menuButtons || new Map();
   }
 
-  
+  /**
+   * Associate the given button to the menu
+   * @param {!Menu} menu 
+   * @param {!MenuButton} button 
+   */
+  addMenuButton(menu, button) {
+    this.menuButtons_.set(menu, button);
+  }
+
   /**
    * @override
    */

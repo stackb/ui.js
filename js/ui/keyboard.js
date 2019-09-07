@@ -4,6 +4,7 @@ const Disposable = goog.require('goog.Disposable');
 const KeyboardShortcutEvent = goog.require('goog.ui.KeyboardShortcutEvent');
 const KeyboardShortcutHandler = goog.require('goog.ui.KeyboardShortcutHandler');
 const events = goog.require('goog.events');
+const objects = goog.require('goog.object');
 
 class Keyboard extends Disposable {
 
@@ -17,8 +18,12 @@ class Keyboard extends Disposable {
     this.shortcuts_ = new KeyboardShortcutHandler(document);
     this.shortcuts_.setAllShortcutsAreGlobal(true);
 
-    events.listen(this.shortcuts_, KeyboardShortcutHandler.EventType.SHORTCUT_TRIGGERED,
-                  this.handleKeyboardShortcut, false, this);
+    events.listen(
+      this.shortcuts_, 
+      KeyboardShortcutHandler.EventType.SHORTCUT_TRIGGERED,
+      this.handleKeyboardShortcut, 
+      false, 
+      this);
   }
 
   /**
@@ -49,6 +54,14 @@ class Keyboard extends Disposable {
     }
   }
 
+  /**
+   * Remove all registered shortcuts.
+   */
+  removeAll() {
+    objects.clear(this.callbacks_);
+    this.shortcuts_.unregisterAll();
+  }
+
   /** @override */
   disposeInternal() {
     super.disposeInternal();
@@ -57,6 +70,7 @@ class Keyboard extends Disposable {
       delete this.shortcuts_;
     }
   }
+
 
 }
 

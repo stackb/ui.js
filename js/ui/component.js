@@ -31,6 +31,7 @@ class Component extends GoogUiComponent {
 
   /**
    * @param {string} name
+   * @suppress {checkDebuggerStatement}
    */
   setName(name) {
     this.name_ = name;
@@ -63,9 +64,9 @@ class Component extends GoogUiComponent {
     while (current) {
       var name = current.getName();
       if (name) {
-        path.push(current.getName());
-      //} else {
-        //console.log('path: no name', current);
+        path.push(name);
+      // } else {
+      //   console.log('path: no name', current);
       }
       current = current.parent();
     }
@@ -88,6 +89,7 @@ class Component extends GoogUiComponent {
     if (route.atEnd()) {
       this.goHere(route);
     } else {
+      // console.warn(`Component ${this.getName()} going down to: "${route.peek()}"`);
       this.goDown(route);
     }
   }
@@ -104,6 +106,7 @@ class Component extends GoogUiComponent {
    * @param {!stack.ui.Route} route
    */
   goDown(route) {
+    // console.warn(`Component ${this.getName()} failed at ${route.peek()}`);
     route.fail(this);
   }
 
@@ -114,6 +117,50 @@ class Component extends GoogUiComponent {
     return /** @type {?stack.ui.Component} */ (
       this.getParent()
     );
+  }
+
+  // /**
+  //  * @override
+  //  */
+  // dispatchEvent(e) {
+  //   console.log("dispatching event", e, this);
+
+
+  //   var ancestorsTree, ancestor = this.getParentEventTarget();
+  //   if (ancestor) {
+  //     ancestorsTree = [];
+  //     for (; ancestor; ancestor = ancestor.getParentEventTarget()) {
+  //       ancestorsTree.push(ancestor);
+  //     }
+  //   }
+
+  //   console.log("ancestors tree", ancestorsTree);
+
+  //   return super.dispatchEvent(e);
+  // }
+
+  // /**
+  //  * Handle a keydown event.  Base implementation just propagates to parent
+  //  * component.  Can be used to implement key handling. 
+  //  * @param {!goog.events.BrowserEvent=} e
+  //  */
+  // handleKeyDown(e) {
+  //   const parent = this.parent();
+  //   if (parent) {
+  //     parent.handleKeyDown(e);
+  //   }
+  // }
+
+  /**
+   * Callback function that bubbles up the active component along the component
+   * hairarachy. 
+   * @param {!Component} target
+   */
+  handleComponentActive(target) {
+    const parent = this.parent();
+    if (parent) {
+      parent.handleComponentActive(target);
+    }
   }
 
   /**
@@ -247,6 +294,13 @@ class Component extends GoogUiComponent {
     //style.backgroundOpacity = '0.3';
     style.backgroundPosition = 'center center';
     style.height = '100%';
+  }
+
+  /**
+   * @return {?Array<!goog.ui.Control>}
+   */
+  getMenuItems() {
+    return null;
   }
 
 }

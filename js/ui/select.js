@@ -55,7 +55,7 @@ class Select extends Component {
   addTab(name, c) {
     var name2id = this.name2id_;
     if (name2id[name]) {
-      throw new Error('Duplicate: ' + name);
+      throw new Error('Duplicate tab: ' + name);
     }
     name2id[name] = asserts.assertString(c.getId());
     c.setName(name);
@@ -104,7 +104,6 @@ class Select extends Component {
   getTabStrict(name) {
     return asserts.assertObject(this.getTab(name));
   }
-  
 
   /**
    * @return {!Array<string>}

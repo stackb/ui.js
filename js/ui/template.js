@@ -13,26 +13,39 @@ class Template extends Component {
 
   /**
    * @param {!Function} template
-   * @param {?Object=} opt_args
+   * @param {!Object} args
+   * @param {?Object=} opt_inject
    * @param {?goog.dom.DomHelper=} opt_domHelper
    */
-  constructor(template, opt_args, opt_domHelper) {
+  constructor(template, args, opt_inject, opt_domHelper) {
     super(opt_domHelper);
 
-    /** @const @private @type {!Function} */
+    /** @const @private */
     this.template_ = template;
 
-    /** @const @private @type {!Object|undefined} */
-    this.args_ = opt_args || undefined;
+    /** @const @private */
+    this.args_ = args;
+
+    /** @const @private */
+    this.inject_ = opt_inject || undefined;
   }
 
   /**
    * @override
    */
   createDom() {
-    this.setElementInternal(soy.renderAsElement(this.template_, this.args_));
+    this.setElementInternal(soy.renderAsElement(this.template_, this.args_, this.inject_));
   }
-  
+
+  /**
+   * Re-render the component.
+   * @param {!Object} args
+   * @param {?Object=} opt_inject
+   */
+  renderElement(args, opt_inject) {
+    soy.renderElement(this.getElementStrict(), this.template_, args, opt_inject);
+  }
+
 }
 
 exports = Template;
