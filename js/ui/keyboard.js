@@ -6,6 +6,13 @@ const KeyboardShortcutHandler = goog.require('goog.ui.KeyboardShortcutHandler');
 const events = goog.require('goog.events');
 const objects = goog.require('goog.object');
 
+/** @typedef {{
+  callback: function(!KeyboardShortcutEvent),
+  id: string,
+  var_args: (!Array<number>|number|string|null),
+ }} */
+var Shortcut;
+
 class Keyboard extends Disposable {
 
   constructor() {
@@ -16,7 +23,10 @@ class Keyboard extends Disposable {
 
     /** @private @type {!KeyboardShortcutHandler} */
     this.shortcuts_ = new KeyboardShortcutHandler(document);
-    this.shortcuts_.setAllShortcutsAreGlobal(true);
+    this.shortcuts_.setAllShortcutsAreGlobal(false);
+
+    /** @private @type {boolean} */
+    this.isEnabled_ = true;
 
     events.listen(
       this.shortcuts_, 
@@ -24,6 +34,9 @@ class Keyboard extends Disposable {
       this.handleKeyboardShortcut, 
       false, 
       this);
+
+    /** @private @const @type {!Map<string,!Shortcut>} */
+    this.shortcutMap_ = new Map();
   }
 
   /**
@@ -41,6 +54,11 @@ class Keyboard extends Disposable {
       this.callbacks_[identifier] = list;
     }
     list.push(callback);
+    this.shortcutMap_.set(identifier, {
+      id: identifier,
+      callback: callback,
+      var_args: var_args,
+    });
     //console.log('Registered shortcut', identifier, var_args);
   }
 
@@ -49,6 +67,9 @@ class Keyboard extends Disposable {
    */
   handleKeyboardShortcut(e) {
     // this.dir(e, 'Notified of kbd shortcut...');
+    if (!this.isEnabled_) {
+      return;
+    }
     for (let c of this.callbacks_[e.identifier]) {
       c(e);
     }
@@ -60,6 +81,20 @@ class Keyboard extends Disposable {
   removeAll() {
     objects.clear(this.callbacks_);
     this.shortcuts_.unregisterAll();
+    this.shortcutMap_.clear();
+  }
+
+ /**
+  * Enable/disable the shotcuts globally.
+  * @param {boolean} b
+   */
+  setEnabled(b) {
+    if (b) {
+      this.shortcutMap_.forEach(v => this.shortcuts_.registerShortcut(v.id, v.var_args));
+    } else {
+      this.shortcuts_.unregisterAll();
+    }
+    this.isEnabled_ = b;
   }
 
   /** @override */
