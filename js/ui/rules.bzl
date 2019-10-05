@@ -1,5 +1,4 @@
 def _node_module_filegroup_impl(ctx):
-
     files = []
     for dep in ctx.attr.deps:
         node_module = dep.node_module
