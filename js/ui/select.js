@@ -67,6 +67,27 @@ class Select extends Component {
     return c;
   }
 
+  /**
+   * Remove a tab by name.  This always unrenders the component but does not
+   * dispose it (responsibility of the caller).
+   * @param {string} name 
+   * @return {?Component}
+   */
+  removeTab(name) {
+    let tab = this.getTab(name);
+    if (!tab) {
+      return null;
+    }
+    this.removeChild(tab, true);
+    delete this.name2id_[name];
+    if (this.current_ === name) {
+      this.current_ = "";
+      if (this.prev_) {
+        this.showTab(this.prev_);
+      }
+    }
+    return tab;
+  }
 
   /**
    * @param {string} name
@@ -180,9 +201,8 @@ class Select extends Component {
   getCurrent() {
     if (this.current_) {
       return this.getTab(this.current_);
-    } else {
-      return null;
-    }
+    } 
+    return null;
   }
 
   
