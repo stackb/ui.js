@@ -5,15 +5,30 @@ load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_binary", "closure_
 closure_js_library(
     name = "component",
     srcs = [
+        "app.js",
         "component.js",
+        "route.js",
+        "route/event.js",
+        "router.js",
     ],
     deps = [
+        ":history",
+        ":keyboard",
+        ":injector",
         "@io_bazel_rules_closure//closure/library/asserts",
+        "@io_bazel_rules_closure//closure/library/dom",
+        "@io_bazel_rules_closure//closure/library/events:event",
+        "@io_bazel_rules_closure//closure/library/events:eventhandler",
+        "@io_bazel_rules_closure//closure/library/events:eventtarget",
         "@io_bazel_rules_closure//closure/library/fx:dom",
         "@io_bazel_rules_closure//closure/library/fx:easing",
+        "@io_bazel_rules_closure//closure/library/history:eventtype",
+        "@io_bazel_rules_closure//closure/library/object",
+        "@io_bazel_rules_closure//closure/library/promise",
         "@io_bazel_rules_closure//closure/library/string",
         "@io_bazel_rules_closure//closure/library/style",
         "@io_bazel_rules_closure//closure/library/ui:component",
+        "@io_bazel_rules_closure//closure/library/ui:control",
     ],
 )
 
@@ -34,27 +49,6 @@ closure_js_library(
         "@io_bazel_rules_closure//closure/library/history:eventtype",
         "@io_bazel_rules_closure//closure/library/history:html5history",
         "@io_bazel_rules_closure//closure/library/string",
-    ],
-)
-
-closure_js_library(
-    name = "routing",
-    srcs = [
-        "route.js",
-        "route/event.js",
-        "router.js",
-    ],
-    deps = [
-        ":component",
-        ":history",
-        "@io_bazel_rules_closure//closure/library/asserts",
-        "@io_bazel_rules_closure//closure/library/promise",
-        "@io_bazel_rules_closure//closure/library/events:event",
-        "@io_bazel_rules_closure//closure/library/events:eventhandler",
-        "@io_bazel_rules_closure//closure/library/events:eventtarget",
-        "@io_bazel_rules_closure//closure/library/ui:component",
-        # "@io_bazel_rules_closure//closure/library/ui:all_js",
-        # "@io_bazel_rules_closure//closure/protobuf:jspb",
     ],
 )
 
@@ -131,18 +125,35 @@ closure_js_library(
     ],
 )
 
+# closure_js_library(
+#     name = "app",
+#     srcs = [
+#     ],
+#     deps = [
+#         ":component",
+#     ],
+# )
+
 closure_js_library(
-    name = "ui",
+    name = "injector",
     srcs = [
-        "app.js",
         "injector.js",
     ],
     deps = [
+        # ":component",
+    ],
+)
+
+closure_js_library(
+    name = "ui",
+    # srcs = [
+    # ],
+    exports = [
+        ":injector",
         ":component",
         ":history",
         ":keyboard",
         ":menushield",
-        ":routing",
         ":select",
         ":syntax",
         ":template",
@@ -173,25 +184,11 @@ closure_js_test(
         "route_test.js",
     ],
     entry_points = ["goog:stack.ui.RouteTest"],
-    suppress = [
-        "reportUnknownTypes",
-    ],
     deps = [
-        ":ui",
-        "@io_bazel_rules_closure//closure/library",
-        "@io_bazel_rules_closure//closure/library:testing",
-    ],
-)
-
-closure_js_test(
-    name = "select_test",
-    srcs = [
-        "select_test.js",
-    ],
-    entry_points = ["goog:stack.ui.SelectTest"],
-    deps = [
-        ":ui",
-        "@io_bazel_rules_closure//closure/library",
+        ":component",
+        ":select",
+        ":app",
+        # "@io_bazel_rules_closure//closure/library",
         "@io_bazel_rules_closure//closure/library:testing",
     ],
 )
@@ -203,8 +200,11 @@ closure_js_test(
     ],
     entry_points = ["goog:stack.ui.HistoryTest"],
     deps = [
-        ":ui",
-        "@io_bazel_rules_closure//closure/library",
+        ":history",
+        "@io_bazel_rules_closure//closure/library/dom",
+        "@io_bazel_rules_closure//closure/library/dom:tagname",
+        "@io_bazel_rules_closure//closure/library/events",
+        "@io_bazel_rules_closure//closure/library/string",
         "@io_bazel_rules_closure//closure/library:testing",
     ],
 )

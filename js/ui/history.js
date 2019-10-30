@@ -101,7 +101,7 @@ class History extends EventTarget {
   handleNavigate(e) {
     var target = this.history_.getToken();
     // target = decodeURIComponent(target);
-    // console.log("handleNavigate target=", target, this.history_.getToken());
+    //console.log(`handleNavigate target = "${target}", token="${this.history_.getToken()}"`);
     if (target != this.current_) {
       this.dispatchEvent(e);
     } else {

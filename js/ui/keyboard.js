@@ -89,10 +89,9 @@ class Keyboard extends Disposable {
   * @param {boolean} b
    */
   setEnabled(b) {
+    this.shortcuts_.unregisterAll();
     if (b) {
       this.shortcutMap_.forEach(v => this.shortcuts_.registerShortcut(v.id, v.var_args));
-    } else {
-      this.shortcuts_.unregisterAll();
     }
     this.isEnabled_ = b;
   }

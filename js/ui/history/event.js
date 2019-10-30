@@ -16,8 +16,10 @@ class HEvent extends GoogEvent {
    */
   constructor(eventType, path) {
     super(eventType);
+
     /** @public @type {string} */
     this.path = path;
+
   }
   
 }

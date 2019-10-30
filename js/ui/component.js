@@ -6,6 +6,7 @@ goog.module('stack.ui.Component');
 const BgColorTransform = goog.require('goog.fx.dom.BgColorTransform');
 const ComponentEventType = goog.require('goog.ui.Component.EventType');
 const GoogUiComponent = goog.require('goog.ui.Component');
+const Route = goog.require('stack.ui.Route');
 const asserts = goog.require('goog.asserts');
 const easing = goog.require('goog.fx.easing');
 const strings = goog.require('goog.string');
@@ -31,7 +32,6 @@ class Component extends GoogUiComponent {
 
   /**
    * @param {string} name
-   * @suppress {checkDebuggerStatement}
    */
   setName(name) {
     this.name_ = name;
@@ -82,7 +82,7 @@ class Component extends GoogUiComponent {
   }
 
   /**
-   * @param {!stack.ui.Route} route
+   * @param {!Route} route
    */
   go(route) {
     route.progress(this);
@@ -95,7 +95,7 @@ class Component extends GoogUiComponent {
   }
 
   /**
-   * @param {!stack.ui.Route} route
+   * @param {!Route} route
    */
   goHere(route) {
     this.show();
@@ -103,7 +103,7 @@ class Component extends GoogUiComponent {
   }
 
   /**
-   * @param {!stack.ui.Route} route
+   * @param {!Route} route
    */
   goDown(route) {
     // console.warn(`Component ${this.getName()} failed at ${route.peek()}`);
@@ -281,7 +281,6 @@ class Component extends GoogUiComponent {
 
     fx.play();
   }
-
 
   /**
    * @param {string} src
