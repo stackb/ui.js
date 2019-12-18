@@ -29,10 +29,10 @@ class Keyboard extends Disposable {
     this.isEnabled_ = true;
 
     events.listen(
-      this.shortcuts_, 
+      this.shortcuts_,
       KeyboardShortcutHandler.EventType.SHORTCUT_TRIGGERED,
-      this.handleKeyboardShortcut, 
-      false, 
+      this.handleKeyboardShortcut,
+      false,
       this);
 
     /** @private @const @type {!Map<string,!Shortcut>} */
@@ -84,10 +84,18 @@ class Keyboard extends Disposable {
     this.shortcutMap_.clear();
   }
 
- /**
-  * Enable/disable the shotcuts globally.
-  * @param {boolean} b
-   */
+  /**
+   * Return the isEnabled flag.
+   * @return {boolean}
+    */
+  isEnabled() {
+    return this.isEnabled_;
+  }
+
+  /**
+   * Enable/disable the shotcuts globally.
+   * @param {boolean} b
+    */
   setEnabled(b) {
     this.shortcuts_.unregisterAll();
     if (b) {

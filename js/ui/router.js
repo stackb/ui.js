@@ -67,7 +67,7 @@ class Router extends EventTarget {
     //console.log('go: ' + path);
     asserts.assertString(path, 'Routing path must be a string');
     if (this.route_) {
-      console.warn(`cannot route to ${path} due to existing route`, this.route_);
+      console.warn(`cannot route to ${path} due to existing route "${this.route_.matchedPath()}" --> "${this.route_.unmatchedPath()}"`);
       return Promise_.reject(
         'Already routing to ' + this.route_.getPath()
       );
