@@ -45,6 +45,13 @@ class Router extends EventTarget {
      * @type {?Route}
      */
     this.route_ = null;
+
+    /**
+     * Strict mode means that an existing route that hasn't finished yet will fail a new attempt.
+     * @private
+     * @type {boolean}
+     */
+    this.strict_ = true;
     
   }
 
@@ -56,7 +63,15 @@ class Router extends EventTarget {
   getCurrentRoute() {
     return this.route_;
   }
-  
+
+  /**
+   * Set the strict mode
+   * @param {boolean} b 
+   */
+  setStrict(b) {
+    this.strict_ = b;
+  }
+
   /**
    * Get a component if registered.
    *i
@@ -66,7 +81,7 @@ class Router extends EventTarget {
   go(path) {
     //console.log('go: ' + path);
     asserts.assertString(path, 'Routing path must be a string');
-    if (this.route_) {
+    if (this.strict_ && this.route_) {
       console.warn(`cannot route to ${path} due to existing route "${this.route_.matchedPath()}" --> "${this.route_.unmatchedPath()}"`);
       return Promise_.reject(
         'Already routing to ' + this.route_.getPath()

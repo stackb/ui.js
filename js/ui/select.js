@@ -190,7 +190,7 @@ class Select extends Component {
    */
   selectFail(name, route) {
     route.fail(this, 'No tab for ' + name + ' in ' + JSON.stringify(this.name2id_));
-    this.getApp().handle404(route);
+    // this.getApp().handle404(route);
   }
   
   /**

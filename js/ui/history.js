@@ -45,7 +45,7 @@ class History extends EventTarget {
   }
   
   /**
-   * @param {!events.Event} e
+   * @param {!events.BrowserEvent} e
    */
   handleDocumentClick(e) {
     //console.log("history; click!");
@@ -68,7 +68,13 @@ class History extends EventTarget {
       return;
     }
     e.preventDefault();
-    e.stopPropagation();
+    // e.stopPropagation();
+
+    if (e.ctrlKey) {
+      const href = anchor.href.replace("/#/", "/");
+      window.open(href, "_blank");
+      return;
+    } 
     hash = hash.substring(2);
     //this.history_.replaceToken(hash);
     //this.replaceToken(hash);

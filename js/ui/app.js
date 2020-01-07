@@ -56,7 +56,7 @@ class App extends Component {
    */
   handleHistoryNavigate(e) {
     this.router_.go(e.token).thenCatch(err => {
-      this.notifyError(`Routing failure while nagivating to ${e.token}`);
+      console.warn(`Routing failure while nagivating to ${e.token}`);
     });
   }
   
