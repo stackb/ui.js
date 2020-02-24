@@ -16,6 +16,11 @@ const asserts =  goog.require('goog.asserts');
 /**
  * Manages a current route in-progress.  Fires
  * goog.ui.Component.EventType.ACTION when a now route is created.
+ *
+ * There is a single route in-progress at any given moment.  If
+ * `router.go(path)` is involved while an existing route is in-progress, the
+ * previous route will be cancelled.
+ *
  */
 class Router extends EventTarget {
 
@@ -45,14 +50,6 @@ class Router extends EventTarget {
      * @type {?Route}
      */
     this.route_ = null;
-
-    /**
-     * Strict mode means that an existing route that hasn't finished yet will fail a new attempt.
-     * @private
-     * @type {boolean}
-     */
-    this.strict_ = true;
-    
   }
 
   /**
@@ -65,27 +62,18 @@ class Router extends EventTarget {
   }
 
   /**
-   * Set the strict mode
-   * @param {boolean} b 
-   */
-  setStrict(b) {
-    this.strict_ = b;
-  }
-
-  /**
-   * Get a component if registered.
-   *i
+   * Navigate to the given route.
+   *
    * @param {string} path
    * @return {!Promise_<!Route>}
    */
   go(path) {
     //console.log('go: ' + path);
     asserts.assertString(path, 'Routing path must be a string');
-    if (this.strict_ && this.route_) {
-      console.warn(`cannot route to ${path} due to existing route "${this.route_.matchedPath()}" --> "${this.route_.unmatchedPath()}"`);
-      return Promise_.reject(
-        'Already routing to ' + this.route_.getPath()
-      );
+    if (this.route_) {
+      console.log(`cancelling existing route "${this.route_.matchedPath()}" --> "${this.route_.unmatchedPath()}"`);
+      this.route_.cancel(`Canceled in favor of ${path}`);
+      this.route_ = null;
     }
 
     // Remove empty path segments

@@ -82,9 +82,21 @@ class Component extends GoogUiComponent {
   }
 
   /**
+   * Navigate to the given route.  If the route has "at end", it means that the
+   * current component is the terminal component to be rendered/shown; in this
+   * case `.goHere(route)` will be called.  If the route has additional
+   * component the `.goDown(route)` method will be called.
+   *
+   * If the route is not "in progress" (failed, cancelled, timed-out), this
+   * method returns immediately.
+   * 
    * @param {!Route} route
    */
   go(route) {
+    if (!route.inProgress()) {
+      console.log(`Aborting go route ${route.getPath()} (not in-progress)`, this);
+      return;
+    }
     route.progress(this);
     if (route.atEnd()) {
       this.goHere(route);

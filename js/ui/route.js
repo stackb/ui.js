@@ -6,8 +6,8 @@ const Promise_ = goog.require('goog.Promise');
 const asserts = goog.require('goog.asserts');
 
 /**
- * A route is a segment of paths and a collection of a components that
- * have traversed along it.
+ * A route is a segment of paths and a collection of a components that have
+ * traversed along it.
  */
 class Route extends EventTarget {
 
@@ -34,7 +34,6 @@ class Route extends EventTarget {
 
     /** @const @private @type {!goog.promise.Resolver<!stack.ui.Route>} */
     this.resolver_ = Promise_.withResolver();
-
   }
 
   /**
@@ -86,10 +85,10 @@ class Route extends EventTarget {
     this.index_ += n;
     return this;
   }
-  
+
   /**
    * Add a path segment to the end of the route.
-   * 
+   *
    * @param {string} segment
    * @return {!Route}
    */
@@ -97,8 +96,8 @@ class Route extends EventTarget {
     // console.info(`Adding segment ${segment}`);
     this.path_.push(segment);
     return this;
-  }  
-  
+  }
+
   /**
    * Get the indexed progress component or the last one if not set.
    *
@@ -109,7 +108,7 @@ class Route extends EventTarget {
     index = goog.isNumber(index) ? index : this.index_ - 1;
     return this.progress_[index] || null;
   }
-  
+
   /**
    * @return {string}
    */
@@ -162,7 +161,7 @@ class Route extends EventTarget {
    * @return {boolean}
    */
   inProgress() {
-    return this.state_ == Route.EventType.PROGRESS;
+    return this.state_ === Route.EventType.PROGRESS;
   }
 
   /**
@@ -247,6 +246,18 @@ class Route extends EventTarget {
   }
 
   /**
+   * @param {string=} opt_reason
+   */
+  cancel(opt_reason) {
+    // this.assertInProgress();
+    this.state_ = Route.EventType.CANCEL;
+    this.failReason_ = opt_reason || `Route cancelled (remaining path was ${this.unmatchedPath().join("/")}`;
+    this.notifyEvent(this.state_, null);
+    this.resolver_.reject(this.failReason_);
+    //console.log('Cancel!', component);
+  }
+
+  /**
    * @param {string} type
    * @param {?stack.ui.Component} component
    */
@@ -270,7 +281,8 @@ Route.EventType = {
   FAIL: 'fail',
   PROGRESS: 'progress',
   TOUCH: 'touch',
-  TIMEOUT: 'timeout'
+  TIMEOUT: 'timeout',
+  CANCEL: 'cancel',
 };
 
 exports = Route;
