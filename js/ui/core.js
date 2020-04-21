@@ -419,7 +419,6 @@ class Router extends EventTarget {
     /** @param {!RouteEvent} e */
     handleFail(e) {
         this.dispatchEvent(e);
-        const target = /** @type {!Route} */(e.target);
         this.unlistenRoute();
     }
 
@@ -746,7 +745,7 @@ class App extends Component {
         this.registerDisposable(this.kbd_);
 
         /** @const @private @type {!Router} */
-        var router = this.router_ = new Router(this, this.history_);
+        var router = this.router_ = new Router(this);
         this.registerDisposable(router);
     }
 
