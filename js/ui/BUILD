@@ -9,8 +9,8 @@ closure_js_library(
     ],
     deps = [
         ":history",
-        ":keyboard",
         ":injector",
+        ":keyboard",
         "@io_bazel_rules_closure//closure/library/asserts",
         "@io_bazel_rules_closure//closure/library/dom",
         "@io_bazel_rules_closure//closure/library/events",
@@ -71,8 +71,8 @@ closure_js_library(
     ],
     deps = [
         ":core",
-        "@io_bazel_rules_closure//closure/library/soy",
         "@io_bazel_rules_closure//closure/library/dom",
+        "@io_bazel_rules_closure//closure/library/soy",
     ],
 )
 
@@ -103,9 +103,9 @@ closure_js_library(
     deps = [
         "@io_bazel_rules_closure//closure/library/asserts",
         "@io_bazel_rules_closure//closure/library/dom",
+        "@io_bazel_rules_closure//closure/library/events",
         "@io_bazel_rules_closure//closure/library/math:coordinate",
         "@io_bazel_rules_closure//closure/library/style",
-        "@io_bazel_rules_closure//closure/library/events",
         "@io_bazel_rules_closure//closure/library/ui:component",
         "@io_bazel_rules_closure//closure/library/ui:container",
         "@io_bazel_rules_closure//closure/library/ui:menu",
@@ -127,7 +127,6 @@ closure_js_library(
     ],
 )
 
-
 closure_js_library(
     name = "injector",
     srcs = [
@@ -141,9 +140,9 @@ closure_js_library(
 closure_js_library(
     name = "ui",
     exports = [
-        ":injector",
         ":core",
         ":history",
+        ":injector",
         ":keyboard",
         ":menushield",
         ":select",
@@ -193,10 +192,10 @@ closure_js_test(
     entry_points = ["goog:stack.ui.HistoryTest"],
     deps = [
         ":history",
+        "@io_bazel_rules_closure//closure/library:testing",
         "@io_bazel_rules_closure//closure/library/dom",
         "@io_bazel_rules_closure//closure/library/dom:tagname",
         "@io_bazel_rules_closure//closure/library/events",
         "@io_bazel_rules_closure//closure/library/string",
-        "@io_bazel_rules_closure//closure/library:testing",
     ],
 )
