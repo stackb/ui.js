@@ -3,16 +3,17 @@
  */
 goog.module('stack.ui.History');
 
-const EventTarget =  goog.require('goog.events.EventTarget');
-const EventType =  goog.require('goog.events.EventType');
-//const HEvent =  goog.require('stack.ui.history.Event');
-const HEventType =  goog.require('goog.history.EventType');
-const Html5History =  goog.require('goog.history.Html5History');
-const TagName =  goog.require('goog.dom.TagName');
-const asserts =  goog.require('goog.asserts');
-const dom =  goog.require('goog.dom');
-const events =  goog.require('goog.events');
-const strings =  goog.require('goog.string');
+const EventTarget = goog.require('goog.events.EventTarget');
+const EventType = goog.require('goog.events.EventType');
+// const HEvent =  goog.require('stack.ui.history.Event');
+const HistoryEvent = goog.require('goog.history.Event');
+const HistoryEventType = goog.require('goog.history.EventType');
+const Html5History = goog.require('goog.history.Html5History');
+const TagName = goog.require('goog.dom.TagName');
+const asserts = goog.require('goog.asserts');
+const dom = goog.require('goog.dom');
+const events = goog.require('goog.events');
+const strings = goog.require('goog.string');
 
 /**
  * Maintains the history and listens for <a> click events. Fires a
@@ -33,7 +34,7 @@ class History extends EventTarget {
     var history = this.history_ = new Html5History();
     history.setUseFragment(false);
 
-    events.listen(history, HEventType.NAVIGATE, this.handleNavigate.bind(this));
+    events.listen(history, HistoryEventType.NAVIGATE, this.handleNavigate.bind(this));
     events.listen(goog.global.document, EventType.CLICK, this.handleDocumentClick.bind(this));
   }
 
@@ -43,7 +44,7 @@ class History extends EventTarget {
   setEnabled(b) {
     this.history_.setEnabled(b);
   }
-  
+
   /**
    * @param {!events.BrowserEvent} e
    */
@@ -54,8 +55,8 @@ class History extends EventTarget {
     // look up through the ancestry chain.
     let anchor = /** @type {?HTMLAnchorElement} */ (
       dom.getAncestor(asserts.assertElement(e.target),
-                      el => el instanceof HTMLElement && el.tagName === TagName.A.toString(),
-                      true)
+        el => el instanceof HTMLElement && el.tagName === TagName.A.toString(),
+        true)
     );
     if (!anchor) {
       return;
@@ -74,7 +75,7 @@ class History extends EventTarget {
       const href = anchor.href.replace("/#/", "/");
       window.open(href, "_blank");
       return;
-    } 
+    }
     hash = hash.substring(2);
     //this.history_.replaceToken(hash);
     //this.replaceToken(hash);
@@ -93,7 +94,7 @@ class History extends EventTarget {
     console.log('Replace token', token);
     this.history_.replaceToken(token);
   }
-  
+
   /**
    * @param {string} token
    */
@@ -102,7 +103,7 @@ class History extends EventTarget {
   }
 
   /**
-   * @param {!goog.history.Event} e
+   * @param {!HistoryEvent} e
    */
   handleNavigate(e) {
     var target = this.history_.getToken();

@@ -3,9 +3,9 @@
  */
 goog.module('stack.ui.Syntax');
 
-const Component = goog.require('stack.ui.Component');
 const asserts = goog.require('goog.asserts');
 const dom = goog.require('goog.dom');
+const { Component } = goog.require('stack.ui');
 
 /**
  * A component that does prism.js syntax highlighting.
@@ -50,7 +50,7 @@ class Syntax extends Component {
       )
     );
   }
-  
+
   /**
    * @override
    */
@@ -61,7 +61,7 @@ class Syntax extends Component {
     }
   }
 
-  
+
   /**
    * @param {?Element} el
    */

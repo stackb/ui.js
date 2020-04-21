@@ -1,9 +1,12 @@
 goog.module('stack.ui.Route');
 
-const Event =  goog.require('stack.ui.route.Event');
+const Component = goog.require('stack.ui.Component');
+const GEvent = goog.require('goog.events.Event');
 const EventTarget = goog.require('goog.events.EventTarget');
 const Promise_ = goog.require('goog.Promise');
+const Resolver = goog.require('goog.promise.Resolver');
 const asserts = goog.require('goog.asserts');
+
 
 /**
  * A route is a segment of paths and a collection of a components that
@@ -23,7 +26,7 @@ class Route extends EventTarget {
     /** @private @type {number} */
     this.index_ = 0;
 
-    /** @private @type {!Array<!stack.ui.Component>} */
+    /** @private @type {!Array<!Component>} */
     this.progress_ = [];
 
     /** @private @type {string} */
@@ -32,7 +35,7 @@ class Route extends EventTarget {
     /** @private @type {string|undefined} */
     this.failReason_ = undefined;
 
-    /** @const @private @type {!goog.promise.Resolver<!stack.ui.Route>} */
+    /** @const @private @type {!Resolver<!Route>} */
     this.resolver_ = Promise_.withResolver();
 
   }
@@ -86,7 +89,7 @@ class Route extends EventTarget {
     this.index_ += n;
     return this;
   }
-  
+
   /**
    * Add a path segment to the end of the route.
    * 
@@ -97,19 +100,19 @@ class Route extends EventTarget {
     // console.info(`Adding segment ${segment}`);
     this.path_.push(segment);
     return this;
-  }  
-  
+  }
+
   /**
    * Get the indexed progress component or the last one if not set.
    *
    * @param {?number=} index
-   * @return {?stack.ui.Component}
+   * @return {?Component}
    */
   get(index) {
     index = goog.isNumber(index) ? index : this.index_ - 1;
     return this.progress_[index] || null;
   }
-  
+
   /**
    * @return {string}
    */
@@ -191,7 +194,7 @@ class Route extends EventTarget {
   /**
    * Record a non-contributing hop along the path, used mainly
    * for debugging.
-   * @param {!stack.ui.Component} component
+   * @param {!Component} component
    */
   touch(component) {
     //console.log('touch:', component);
@@ -210,7 +213,7 @@ class Route extends EventTarget {
   }
 
   /**
-   * @param {!stack.ui.Component} component
+   * @param {!Component} component
    */
   progress(component) {
     //console.log('progress: in progress?', this.inProgress());
@@ -223,7 +226,7 @@ class Route extends EventTarget {
   }
 
   /**
-   * @param {!stack.ui.Component} component
+   * @param {!Component} component
    */
   done(component) {
     // this.assertInProgress();
@@ -234,7 +237,7 @@ class Route extends EventTarget {
   }
 
   /**
-   * @param {!stack.ui.Component} component
+   * @param {!Component} component
    * @param {string=} opt_reason
    */
   fail(component, opt_reason) {
@@ -248,10 +251,10 @@ class Route extends EventTarget {
 
   /**
    * @param {string} type
-   * @param {?stack.ui.Component} component
+   * @param {?Component} component
    */
   notifyEvent(type, component) {
-    this.dispatchEvent(new Event(type, this, component));
+    this.dispatchEvent(new RouteEvent(type, this, component));
   }
 
   /** @override */
@@ -274,3 +277,30 @@ Route.EventType = {
 };
 
 exports = Route;
+
+class RouteEvent extends GEvent {
+
+  /**
+   * Event class for routing.
+   *
+   * @param {string} type Event Type.
+   * @param {!Route} target Reference to the initiating route.
+   * @param {?Component=} component The component relevant to the event.
+   */
+  constructor(type, target, component) {
+    super(type, target);
+
+    /**
+     * @type {!Route}
+     */
+    this.route = target;
+
+    /**
+     * @type {?Component|undefined}
+     */
+    this.component = component;
+  }
+
+}
+
+Route.Event = RouteEvent;

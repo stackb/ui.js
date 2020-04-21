@@ -3,8 +3,9 @@
  */
 goog.module('stack.ui.Markdown');
 
-const Component = goog.require('stack.ui.Component');
 const dom = goog.require('goog.dom');
+const { Component } = goog.require('stack.ui');
+
 
 /**
  * A template that does marked rendering from a soy template.
@@ -28,7 +29,7 @@ class Markdown extends Component {
   createDom() {
     this.setElementInternal(this.getDomHelper().createDom(dom.TagName.DIV, 'markdown-body'));
   }
-  
+
   /**
    * @override
    */
@@ -46,8 +47,8 @@ class Markdown extends Component {
       this.renderMarkdown();
     }
   }
-  
-  
+
+
   /**
    * Convert text to markdown and set as innerHTML
    * @suppress {reportUnknownTypes}
@@ -65,7 +66,7 @@ class Markdown extends Component {
       console.warn('markdown error', err);
     }
   }
-  
+
 }
 
 exports = Markdown;

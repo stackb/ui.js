@@ -3,9 +3,10 @@
  */
 goog.module('stack.ui.Select');
 
-const Component =  goog.require('stack.ui.Component');
-const TabEvent =  goog.require('stack.ui.TabEvent');
-const asserts =  goog.require('goog.asserts');
+const TabEvent = goog.require('stack.ui.TabEvent');
+const asserts = goog.require('goog.asserts');
+const dom = goog.require('goog.dom');
+const { Component, Route } = goog.require('stack.ui');
 
 /**
  * Component with routing capability such that only one named child
@@ -14,7 +15,7 @@ const asserts =  goog.require('goog.asserts');
 class Select extends Component {
 
   /**
-   * @param {?goog.dom.DomHelper=} opt_domHelper
+   * @param {?dom.DomHelper=} opt_domHelper
    */
   constructor(opt_domHelper) {
     super(opt_domHelper);
@@ -46,7 +47,7 @@ class Select extends Component {
   getCurrentTabName() {
     return this.current_;
   }
-  
+
   /**
    * @param {string} name
    * @param {!Component} c
@@ -145,11 +146,11 @@ class Select extends Component {
   }
 
   /**
-   * @param {!stack.ui.Route} route
+   * @param {!Route} route
    */
   selectHere(route) {
     super.goHere(route);
-  }  
+  }
 
   /**
    * @override
@@ -168,10 +169,10 @@ class Select extends Component {
     }
   }
 
-  
+
   /**
    * @param {string} name
-   * @param {!stack.ui.Route} route
+   * @param {!Route} route
    */
   select(name, route) {
     asserts.assertString(name);
@@ -183,16 +184,16 @@ class Select extends Component {
     }
   }
 
-  
+
   /**
    * @param {string} name
-   * @param {!stack.ui.Route} route
+   * @param {!Route} route
    */
   selectFail(name, route) {
     route.fail(this, 'No tab for ' + name + ' in ' + JSON.stringify(this.name2id_));
     // this.getApp().handle404(route);
   }
-  
+
   /**
    * Get the current tab.
    *
@@ -201,11 +202,11 @@ class Select extends Component {
   getCurrent() {
     if (this.current_) {
       return this.getTab(this.current_);
-    } 
+    }
     return null;
   }
 
-  
+
   /**
    * Hide the current tab and make it the previous.
    * @return {?Component}
@@ -222,7 +223,7 @@ class Select extends Component {
     this.current_ = null;
     return prev;
   }
-  
+
 }
 
 exports = Select;

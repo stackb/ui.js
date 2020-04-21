@@ -3,13 +3,9 @@ package(default_visibility = ["//visibility:public"])
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_binary", "closure_js_library", "closure_js_test")
 
 closure_js_library(
-    name = "component",
+    name = "core",
     srcs = [
-        "app.js",
-        "component.js",
-        "route.js",
-        "route/event.js",
-        "router.js",
+        "core.js",
     ],
     deps = [
         ":history",
@@ -17,14 +13,16 @@ closure_js_library(
         ":injector",
         "@io_bazel_rules_closure//closure/library/asserts",
         "@io_bazel_rules_closure//closure/library/dom",
-        "@io_bazel_rules_closure//closure/library/events:event",
+        "@io_bazel_rules_closure//closure/library/events",
         "@io_bazel_rules_closure//closure/library/events:eventhandler",
         "@io_bazel_rules_closure//closure/library/events:eventtarget",
         "@io_bazel_rules_closure//closure/library/fx:dom",
         "@io_bazel_rules_closure//closure/library/fx:easing",
+        "@io_bazel_rules_closure//closure/library/history:event",
         "@io_bazel_rules_closure//closure/library/history:eventtype",
         "@io_bazel_rules_closure//closure/library/object",
         "@io_bazel_rules_closure//closure/library/promise",
+        "@io_bazel_rules_closure//closure/library/promise:resolver",
         "@io_bazel_rules_closure//closure/library/string",
         "@io_bazel_rules_closure//closure/library/style",
         "@io_bazel_rules_closure//closure/library/ui:component",
@@ -46,6 +44,7 @@ closure_js_library(
         "@io_bazel_rules_closure//closure/library/events:event",
         "@io_bazel_rules_closure//closure/library/events:eventtarget",
         "@io_bazel_rules_closure//closure/library/events:eventtype",
+        "@io_bazel_rules_closure//closure/library/history:event",
         "@io_bazel_rules_closure//closure/library/history:eventtype",
         "@io_bazel_rules_closure//closure/library/history:html5history",
         "@io_bazel_rules_closure//closure/library/string",
@@ -71,8 +70,9 @@ closure_js_library(
         "template.js",
     ],
     deps = [
-        ":component",
+        ":core",
         "@io_bazel_rules_closure//closure/library/soy",
+        "@io_bazel_rules_closure//closure/library/dom",
     ],
 )
 
@@ -85,7 +85,7 @@ closure_js_library(
         "tabs.js",
     ],
     deps = [
-        ":component",
+        ":core",
         "@io_bazel_rules_closure//closure/library/asserts",
         "@io_bazel_rules_closure//closure/library/dom",
         "@io_bazel_rules_closure//closure/library/dom:classlist",
@@ -105,7 +105,9 @@ closure_js_library(
         "@io_bazel_rules_closure//closure/library/dom",
         "@io_bazel_rules_closure//closure/library/math:coordinate",
         "@io_bazel_rules_closure//closure/library/style",
+        "@io_bazel_rules_closure//closure/library/events",
         "@io_bazel_rules_closure//closure/library/ui:component",
+        "@io_bazel_rules_closure//closure/library/ui:container",
         "@io_bazel_rules_closure//closure/library/ui:menu",
         "@io_bazel_rules_closure//closure/library/ui:menubutton",
         "@io_bazel_rules_closure//closure/library/ui:submenu",
@@ -119,20 +121,12 @@ closure_js_library(
         "syntax.js",
     ],
     deps = [
-        ":component",
+        ":core",
         "@io_bazel_rules_closure//closure/library/asserts",
         "@io_bazel_rules_closure//closure/library/dom",
     ],
 )
 
-# closure_js_library(
-#     name = "app",
-#     srcs = [
-#     ],
-#     deps = [
-#         ":component",
-#     ],
-# )
 
 closure_js_library(
     name = "injector",
@@ -140,17 +134,15 @@ closure_js_library(
         "injector.js",
     ],
     deps = [
-        # ":component",
+        # ":core",
     ],
 )
 
 closure_js_library(
     name = "ui",
-    # srcs = [
-    # ],
     exports = [
         ":injector",
-        ":component",
+        ":core",
         ":history",
         ":keyboard",
         ":menushield",
@@ -185,7 +177,7 @@ closure_js_test(
     ],
     entry_points = ["goog:stack.ui.RouteTest"],
     deps = [
-        ":component",
+        ":core",
         ":select",
         ":app",
         # "@io_bazel_rules_closure//closure/library",

@@ -6,7 +6,8 @@ goog.module('stack.ui.Component');
 const BgColorTransform = goog.require('goog.fx.dom.BgColorTransform');
 const ComponentEventType = goog.require('goog.ui.Component.EventType');
 const GoogUiComponent = goog.require('goog.ui.Component');
-const Route = goog.require('stack.ui.Route');
+const GoogUiControl = goog.require('goog.ui.Control');
+// const Route = goog.require('stack.ui.Route');
 const asserts = goog.require('goog.asserts');
 const easing = goog.require('goog.fx.easing');
 const strings = goog.require('goog.string');
@@ -18,7 +19,7 @@ const style = goog.require('goog.style');
 class Component extends GoogUiComponent {
 
   /**
-   * @param {?goog.dom.DomHelper=} opt_domHelper
+   * @param {?dom.DomHelper=} opt_domHelper
    */
   constructor(opt_domHelper) {
     super(opt_domHelper);
@@ -65,8 +66,8 @@ class Component extends GoogUiComponent {
       var name = current.getName();
       if (name) {
         path.push(name);
-      // } else {
-      //   console.log('path: no name', current);
+        // } else {
+        //   console.log('path: no name', current);
       }
       current = current.parent();
     }
@@ -111,10 +112,10 @@ class Component extends GoogUiComponent {
   }
 
   /**
-   * @return {?stack.ui.Component}
+   * @return {?Component}
    */
   parent() {
-    return /** @type {?stack.ui.Component} */ (
+    return /** @type {?Component} */ (
       this.getParent()
     );
   }
@@ -165,30 +166,30 @@ class Component extends GoogUiComponent {
 
   /**
    * @param {string} id
-   * @return {?stack.ui.Component}
+   * @return {?Component}
    */
   child(id) {
-    return /** @type {?stack.ui.Component} */ (
+    return /** @type {?Component} */ (
       this.getChild(id)
     );
   }
 
   /**
    * @param {number} index
-   * @return {!stack.ui.Component}
+   * @return {!Component}
    */
   childAt(index) {
-    return /** @type {!stack.ui.Component} */ (
+    return /** @type {!Component} */ (
       asserts.assertObject(this.getChildAt(index))
     );
   }
 
   /**
    * @param {string} id
-   * @return {!stack.ui.Component}
+   * @return {!Component}
    */
   strictchild(id) {
-    return /** @type {!stack.ui.Component} */ (
+    return /** @type {!Component} */ (
       asserts.assertObject(this.getChild(id))
     );
   }
@@ -196,10 +197,10 @@ class Component extends GoogUiComponent {
   /**
    * Return the root component.
    * 
-   * @return {!stack.ui.Component}
+   * @return {!Component}
    */
   getRoot() {
-    /** @type {?stack.ui.Component} */
+    /** @type {?Component} */
     let current = this;
     while (current) {
       if (!current.parent()) {
@@ -217,7 +218,7 @@ class Component extends GoogUiComponent {
     return /** @type {!stack.ui.App} */ (this.getRoot());
   }
 
-  
+
   /**
    * Default is no-op.
    */
@@ -260,7 +261,7 @@ class Component extends GoogUiComponent {
    * @param {number=} opt_time Length of animation in milliseconds.
    * @param {?Function=} opt_accel Acceleration function, returns 0-1 for inputs 0-1.
    * @param {?Element=} opt_element Dom Node to be used in the animation.
-   * @param {?goog.events.EventHandler=} opt_eventHandler Optional event handler
+   * @param {?events.EventHandler=} opt_eventHandler Optional event handler
    *     to use when listening for events.
    */
   bgColorFadeIn(opt_start, opt_end, opt_time, opt_accel, opt_element, opt_eventHandler) {
@@ -296,7 +297,7 @@ class Component extends GoogUiComponent {
   }
 
   /**
-   * @return {?Array<!goog.ui.Control>}
+   * @return {?Array<!GoogUiControl>}
    */
   getMenuItems() {
     return null;
