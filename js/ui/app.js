@@ -2,14 +2,16 @@ goog.module('stack.ui.App');
 
 const BzlHistory = goog.require('stack.ui.History');
 const Component = goog.require('stack.ui.Component');
-const HEventType =  goog.require('goog.history.EventType');
-const Injector =  goog.require('stack.ui.Injector');
+const HistoryEvent = goog.require('goog.history.Event');
+const HistoryEventType = goog.require('goog.history.EventType');
+const Injector = goog.require('stack.ui.Injector');
 const Keyboard = goog.require('stack.ui.Keyboard');
-const Promise_ =  goog.require('goog.Promise');
-const Router =  goog.require('stack.ui.Router');
-const asserts =  goog.require('goog.asserts');
-const dom =  goog.require('goog.dom');
-const objects =  goog.require('goog.object');
+const Promise_ = goog.require('goog.Promise');
+const Route = goog.require('stack.ui.Route');
+const Router = goog.require('stack.ui.Router');
+const asserts = goog.require('goog.asserts');
+const dom = goog.require('goog.dom');
+const objects = goog.require('goog.object');
 
 
 class App extends Component {
@@ -25,7 +27,7 @@ class App extends Component {
      * @type {!Injector}
      */
     this.injector_ = new Injector();
-    
+
     /**
      * A registry of components that can be accessed by a common name.
      * @const @private
@@ -35,7 +37,7 @@ class App extends Component {
 
     /** @const @private @type {!BzlHistory} */
     this.history_ = new BzlHistory();
-    this.getHandler().listen(this.history_, HEventType.NAVIGATE, this.handleHistoryNavigate);
+    this.getHandler().listen(this.history_, HistoryEventType.NAVIGATE, this.handleHistoryNavigate);
     this.registerDisposable(this.history_);
 
     /** @const @private @type {!Keyboard} */
@@ -50,16 +52,16 @@ class App extends Component {
   start() {
     this.history_.setEnabled(true);
   }
-  
+
   /**
-   * @param {!goog.history.Event} e
+   * @param {!HistoryEvent} e
    */
   handleHistoryNavigate(e) {
     this.router_.go(e.token).thenCatch(err => {
       console.warn(`Routing failure while nagivating to ${e.token}`);
     });
   }
-  
+
   /**
    * @param {!Component} c
    * @param {!boolean} b
@@ -71,14 +73,14 @@ class App extends Component {
       console.warn("Stop Loaded " + c.getPathUrl());
     }
   }
-  
+
   /**
    * @return {!Keyboard}
    */
   getKbd() {
     return this.kbd_;
   }
-  
+
   /**
    * @return {!Router}
    */
@@ -92,7 +94,7 @@ class App extends Component {
   getInjector() {
     return this.injector_;
   }
-  
+
   /**
    * @param {string} msg
    */
@@ -138,8 +140,8 @@ class App extends Component {
     //route.touch(this);
     super.go(route);
   }
-  
-  /** @param {!stack.ui.Route} route */
+
+  /** @param {!Route} route */
   handle404(route) {
     this.notifyError("404 (Not Found): " + route.getPath());
   }
@@ -157,7 +159,7 @@ class App extends Component {
    * will loopback on this object to the go() method.
    *
    * @param {string} path
-   * @return {!Promise_<!stack.ui.Route>}
+   * @return {!Promise_<!Route>}
    */
   route(path) {
     return this.router_.go(path).thenCatch(err => {

@@ -3,15 +3,12 @@
  */
 goog.module('stack.ui.Router');
 
-const Component = goog.require('stack.ui.Component');
 const ComponentEventType = goog.require('goog.ui.Component.EventType');
 const EventHandler = goog.require('goog.events.EventHandler');
 const EventTarget = goog.require('goog.events.EventTarget');
-const History_ =  goog.require('stack.ui.History');
-const Promise_ =  goog.require('goog.Promise');
-const Route =  goog.require('stack.ui.Route');
-const RouteEvent =  goog.require('stack.ui.route.Event');
-const asserts =  goog.require('goog.asserts');
+const History_ = goog.require('stack.ui.History');
+const Promise_ = goog.require('goog.Promise');
+const asserts = goog.require('goog.asserts');
 
 /**
  * Manages a current route in-progress.  Fires
@@ -52,7 +49,7 @@ class Router extends EventTarget {
      * @type {boolean}
      */
     this.strict_ = true;
-    
+
   }
 
   /**
@@ -94,7 +91,7 @@ class Router extends EventTarget {
     var route = new Route(list);
     this.listenRoute(route);
 
-    this.dispatchEvent(new RouteEvent(
+    this.dispatchEvent(new Route.Event(
       ComponentEventType.ACTION,
       route
     ));
@@ -112,20 +109,20 @@ class Router extends EventTarget {
     return route.getPromise();
   }
 
-  /** @param {!RouteEvent} e */
+  /** @param {!Route.Event} e */
   handleProgress(e) {
     this.dispatchEvent(e);
     //console.log(e.target.index() + '. Progress ' + e.target.pathMatched(), e.component);
   }
 
-  /** @param {!RouteEvent} e */
+  /** @param {!Route.Event} e */
   handleDone(e) {
     this.dispatchEvent(e);
     //console.log('Done! ' + e.target.matchedPath(), e.component);
     this.unlistenRoute();
   }
 
-  /** @param {!RouteEvent} e */
+  /** @param {!Route.Event} e */
   handleFail(e) {
     this.dispatchEvent(e);
     const target = /** @type {!Route} */(e.target);
@@ -133,7 +130,7 @@ class Router extends EventTarget {
     this.unlistenRoute();
   }
 
-  /** @param {!RouteEvent} e */
+  /** @param {!Route.Event} e */
   handleTimeout(e) {
     console.warn('Route Timeout', e);
     this.unlistenRoute();

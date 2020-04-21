@@ -3,8 +3,9 @@
  */
 goog.module('stack.ui.Template');
 
-const Component = goog.require('stack.ui.Component');
+const dom = goog.require('goog.dom');
 const soy = goog.require('goog.soy');
+const { Component } = goog.require('stack.ui');
 
 /**
  * A component that takes a soy template and optional args.
@@ -15,7 +16,7 @@ class Template extends Component {
    * @param {!Function} template
    * @param {!Object} args
    * @param {?Object=} opt_inject
-   * @param {?goog.dom.DomHelper=} opt_domHelper
+   * @param {?dom.DomHelper=} opt_domHelper
    */
   constructor(template, args, opt_inject, opt_domHelper) {
     super(opt_domHelper);

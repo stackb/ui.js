@@ -10,14 +10,14 @@ const soy = goog.require('goog.soy');
 class Body extends Select {
 
   /**
-   * @param {?goog.dom.DomHelper=} opt_domHelper
+   * @param {?dom.DomHelper=} opt_domHelper
    */
   constructor(opt_domHelper) {
     super(opt_domHelper);
     this.addTab('home', new Home());
     this.addTab('search', new List());
   }
-    
+
   /**
    * Modifies behavior to use touch rather than progress to
    * not advance the path pointer.
@@ -38,7 +38,7 @@ class Body extends Select {
   goHere(route) {
     this.select('home', route.add('home'));
   }
-  
+
   /**
    * @override
    */
@@ -55,7 +55,7 @@ class Body extends Select {
     super.enterDocument();
     this.addChild(new Menu(this.getTabStrict('search'), this.getDomHelper()), true);
   }
- 
+
 }
 
 exports = Body;
