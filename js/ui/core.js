@@ -767,11 +767,6 @@ class App extends Component {
      * @param {!boolean} b
      */
     setLoading(c, b) {
-        if (b) {
-            console.warn("Starting Loading " + c.getPathUrl());
-        } else {
-            console.warn("Stop Loaded " + c.getPathUrl());
-        }
     }
 
     /**
