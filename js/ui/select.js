@@ -4,6 +4,7 @@
 goog.module('stack.ui.Select');
 
 const TabEvent = goog.require('stack.ui.TabEvent');
+const Template = goog.require('stack.ui.Template');
 const asserts = goog.require('goog.asserts');
 const dom = goog.require('goog.dom');
 const { Component, Route } = goog.require('stack.ui');
@@ -38,7 +39,6 @@ class Select extends Component {
      * @private @type {?string}
      */
     this.prev_ = null;
-
   }
 
   /**
@@ -169,7 +169,6 @@ class Select extends Component {
     }
   }
 
-
   /**
    * @param {string} name
    * @param {!Route} route
@@ -184,14 +183,33 @@ class Select extends Component {
     }
   }
 
-
   /**
    * @param {string} name
    * @param {!Route} route
    */
   selectFail(name, route) {
-    route.fail(this, 'No tab for ' + name + ' in ' + JSON.stringify(this.name2id_));
-    // this.getApp().handle404(route);
+    const notFound = this.getNotFoundTemplate();
+    if (notFound) {
+      this.selectNotFound(name, route, notFound);
+    } else {
+      route.fail(this, `No tab for ${name} in ${JSON.stringify(this.name2id_)}`);
+    }
+  }
+
+  /**
+   * The base case when the tab is not found.
+   * @param {string} name
+   * @param {!Route} route
+   * @param {!Function} template
+   */
+  selectNotFound(name, route, template) {
+    this.addTab(name, new Template(template, {
+      name: name,
+      route: route,
+    }, {
+      pathURL: this.getPathUrl(),
+    }));
+    this.select(name, route);
   }
 
   /**
@@ -205,7 +223,6 @@ class Select extends Component {
     }
     return null;
   }
-
 
   /**
    * Hide the current tab and make it the previous.
@@ -224,6 +241,14 @@ class Select extends Component {
     return prev;
   }
 
+  /**
+   * A function to be overridden by subclasses to opt-in
+   * to the not-found template.
+   * @returns {?Function} template
+   */
+  getNotFoundTemplate() {
+    return null;
+  }
 }
 
 exports = Select;
