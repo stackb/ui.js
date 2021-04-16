@@ -68,14 +68,12 @@ class History extends EventTarget {
     if (!strings.startsWith(hash, '#/')) {
       return;
     }
-    e.preventDefault();
-    // e.stopPropagation();
-
-    if (e.ctrlKey) {
-      const href = anchor.href.replace("/#/", "/");
-      window.open(href, "_blank");
+    if (e.ctrlKey || e.metaKey) {
       return;
     }
+
+    e.preventDefault();
+
     hash = hash.substring(2);
     //this.history_.replaceToken(hash);
     //this.replaceToken(hash);
