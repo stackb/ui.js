@@ -10,7 +10,7 @@ const HistoryEvent = goog.require('goog.history.Event');
 const HistoryEventType = goog.require('goog.history.EventType');
 const Html5History = goog.require('goog.history.Html5History');
 const TagName = goog.require('goog.dom.TagName');
-const asserts = goog.require('goog.asserts');
+const assertsDom = goog.require('goog.asserts.dom');
 const dom = goog.require('goog.dom');
 const events = goog.require('goog.events');
 const strings = goog.require('goog.string');
@@ -54,7 +54,7 @@ class History extends EventTarget {
     // Element that was clicked could be a child of of the <a>, so
     // look up through the ancestry chain.
     let anchor = /** @type {?HTMLAnchorElement} */ (
-      dom.getAncestor(asserts.assertElement(e.target),
+      dom.getAncestor(assertsDom.assertIsElement(e.target),
         el => el instanceof HTMLElement && el.tagName === TagName.A.toString(),
         true)
     );

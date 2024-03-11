@@ -17,6 +17,7 @@ const Injector = goog.require('stack.ui.Injector');
 const Keyboard = goog.require('stack.ui.Keyboard');
 const Resolver = goog.require('goog.promise.Resolver');
 const asserts = goog.require('goog.asserts');
+const assertsDom = goog.require('goog.asserts.dom');
 const dom = goog.require('goog.dom');
 const easing = goog.require('goog.fx.easing');
 const events = goog.require('goog.events');
@@ -683,7 +684,7 @@ class Component extends GoogUiComponent {
         var end = opt_end || [256, 256, 256];
         var time = opt_time || 250;
         var accel = opt_accel || easing.easeOutLong;
-        var element = opt_element || asserts.assertElement(this.getContentElement());
+        var element = opt_element || assertsDom.assertIsElement(this.getContentElement());
 
         fx = this.fx_ =
             new BgColorTransform(element, start, end, time, accel);
