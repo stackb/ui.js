@@ -7,8 +7,8 @@ const BgColorTransform = goog.require('goog.fx.dom.BgColorTransform');
 const ComponentEventType = goog.require('goog.ui.Component.EventType');
 const GoogUiComponent = goog.require('goog.ui.Component');
 const GoogUiControl = goog.require('goog.ui.Control');
-// const Route = goog.require('stack.ui.Route');
 const asserts = goog.require('goog.asserts');
+const assertsDom = goog.require('goog.asserts.dom');
 const easing = goog.require('goog.fx.easing');
 const strings = goog.require('goog.string');
 const style = goog.require('goog.style');
@@ -275,7 +275,7 @@ class Component extends GoogUiComponent {
     var end = opt_end || [256, 256, 256];
     var time = opt_time || 250;
     var accel = opt_accel || easing.easeOutLong;
-    var element = opt_element || asserts.assertElement(this.getContentElement());
+    var element = opt_element || assertsDom.assertIsElement(this.getContentElement());
 
     fx = this.fx_ =
       new BgColorTransform(element, start, end, time, accel);

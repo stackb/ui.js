@@ -4,6 +4,7 @@
 goog.module('stack.ui.Syntax');
 
 const asserts = goog.require('goog.asserts');
+const assertsDom = goog.require('goog.asserts.dom');
 const dom = goog.require('goog.dom');
 const { Component } = goog.require('stack.ui');
 
@@ -43,7 +44,7 @@ class Syntax extends Component {
    */
   getCodeElement() {
     return /** @type{!HTMLSpanElement} */(
-      asserts.assertElement(
+      assertsDom.assertIsElement(
         /** @type{!HTMLElement} */(
           this.getElementStrict()
         ).firstElementChild
