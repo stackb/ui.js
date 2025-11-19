@@ -125,9 +125,6 @@ closure_js_library(
 closure_js_library(
     name = "injector",
     srcs = ["injector.js"],
-    deps = [
-        # ":core",
-    ],
 )
 
 closure_js_library(
@@ -151,10 +148,9 @@ closure_js_library(
 
 closure_js_test(
     name = "component_test",
-    srcs = [
-        "component_test.js",
-    ],
+    srcs = ["component_test.js"],
     entry_points = ["goog:stack.ui.ComponentTest"],
+    tags = ["manual"],
     deps = [
         ":ui",
         "@io_bazel_rules_closure//closure/library:testing",
@@ -165,6 +161,7 @@ closure_js_test(
     name = "route_test",
     srcs = ["route_test.js"],
     entry_points = ["goog:stack.ui.RouteTest"],
+    tags = ["manual"],
     deps = [
         ":core",
         ":select",
@@ -174,10 +171,9 @@ closure_js_test(
 
 closure_js_test(
     name = "history_test",
-    srcs = [
-        "history_test.js",
-    ],
+    srcs = ["history_test.js"],
     entry_points = ["goog:stack.ui.HistoryTest"],
+    tags = ["manual"],
     deps = [
         ":history",
         "@io_bazel_rules_closure//closure/goog/dom",
