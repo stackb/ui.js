@@ -1,5 +1,5 @@
 module(
-    name = "build_stack_ui_js",
+    name = "stackb_ui_js",
     version = "0.0.0",
     compatibility_level = 1,
 )
@@ -20,9 +20,19 @@ bazel_dep(name = "buildifier_prebuilt", version = "8.2.0.2", dev_dependency = Tr
 # Overrides
 # -------------------------------------------------------------------
 
-local_path_override(
+# Commit: a86e7cde7cad50dee4c284e91a2901ae15f6e436
+# Date: 2025-11-19 23:29:16 +0000 UTC
+# URL: https://github.com/stackb/rules_closure/commit/a86e7cde7cad50dee4c284e91a2901ae15f6e436
+#
+# Merge pull request #5 from stackb/pcj/label-fixes-wip
+#
+# Avoid self references to @io_bazel_rules_closure
+# Size: 5019476 (5.0 MB)
+archive_override(
     module_name = "io_bazel_rules_closure",
-    path = "/Users/pcj/go/src/github.com/bazelbuild/rules_closure",
+    sha256 = "c714fcf20139b54c898bf0d011493cc684753cc187cde7d5bfe9ddc171c66e38",
+    strip_prefix = "rules_closure-a86e7cde7cad50dee4c284e91a2901ae15f6e436",
+    urls = ["https://github.com/stackb/rules_closure/archive/a86e7cde7cad50dee4c284e91a2901ae15f6e436.tar.gz"],
 )
 
 # NOTE: cannot upgrade past protobuf editions...
