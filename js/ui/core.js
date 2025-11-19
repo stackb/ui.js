@@ -710,13 +710,10 @@ class Component extends GoogUiComponent {
     getMenuItems() {
         return null;
     }
-
 }
-
 exports.Component = Component;
 
 class App extends Component {
-
     /**
      * @param {?dom.DomHelper=} opt_domHelper
      */
@@ -823,7 +820,10 @@ class App extends Component {
         return asserts.assertObject(this.components_[name]);
     }
 
-    /** @override */
+    /**
+     * @override
+     * @param {!Route} route
+     */
     go(route) {
         //route.touch(this);
         super.go(route);

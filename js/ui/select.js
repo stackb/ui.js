@@ -136,6 +136,7 @@ class Select extends Component {
 
   /**
    * @override
+   * @param {!Route} route
    */
   goHere(route) {
     if (this.current_) {
@@ -154,6 +155,7 @@ class Select extends Component {
 
   /**
    * @override
+   * @param {!Route} route
    */
   goDown(route) {
     var name = route.peek();

@@ -166,7 +166,7 @@ class App extends Component {
    * @param {!Array<string>} path
    */
   setLocation(path) {
-    //console.log('setLocation', path);
+    // console.log('setLocation', path);
     this.history_.setLocation(path.join('/'));
   }
 

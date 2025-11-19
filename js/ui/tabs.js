@@ -3,11 +3,11 @@
  */
 goog.module('stack.ui.Tabs');
 
-const Select =  goog.require('stack.ui.Select');
-const TagName =  goog.require('goog.dom.TagName');
-const asserts =  goog.require('goog.asserts');
-const classlist =  goog.require('goog.dom.classlist');
-const dataset =  goog.require('goog.dom.dataset');
+const Select = goog.require('stack.ui.Select');
+const TagName = goog.require('goog.dom.TagName');
+const asserts = goog.require('goog.asserts');
+const classlist = goog.require('goog.dom.classlist');
+const dataset = goog.require('goog.dom.dataset');
 const dom = goog.require('goog.dom');
 
 /**
@@ -45,7 +45,7 @@ class Tabs extends Select {
     }
   }
 
-  
+
   /**
    * Add the menu element if one was not provided to the constructor.
    * @return {!HTMLElement}
@@ -56,7 +56,7 @@ class Tabs extends Select {
     dom.insertChildAt(el, menu, 0);
     return menu;
   }
-  
+
 
   /**
    * @return {!HTMLElement}
@@ -65,15 +65,15 @@ class Tabs extends Select {
     return /** @type{!HTMLElement} */(this.getDomHelper().createDom(TagName.DIV, this.getMenuElementClass()));
   }
 
-  
+
   /**
    * @return {string}
    */
   getMenuElementClass() {
     return 'ui menu';
   }
-  
-  
+
+
   /**
    * @return {?HTMLElement}
    */
@@ -81,9 +81,10 @@ class Tabs extends Select {
     return this.menuElement_;
   }
 
-  
+
   /**
    * @override
+   * @param {!Route} route
    */
   goHere(route) {
     if (this.defaultTabName_) {
@@ -92,9 +93,12 @@ class Tabs extends Select {
       super.goHere(route);
     }
   }
-  
+
   /**
    * @override
+   * @param {string} name
+   * @param {!Component} c
+   * @returns {!Component}
    */
   addTab(name, c) {
     super.addTab(name, c);
@@ -105,6 +109,8 @@ class Tabs extends Select {
 
   /**
    * @override
+   * @param {string} name
+   * @returns {!Component}
    */
   showTab(name) {
     var tab = super.showTab(name);
@@ -119,6 +125,7 @@ class Tabs extends Select {
 
   /**
    * @override
+   * @returns {!Component}
    */
   hideCurrent() {
     const name = this.getCurrentTabName();
@@ -131,7 +138,7 @@ class Tabs extends Select {
     }
     return super.hideCurrent();
   }
-  
+
   /**
    * @param {string} name
    * @param {!stack.ui.Component} c
@@ -159,7 +166,7 @@ class Tabs extends Select {
     }
     return null;
   }
-  
+
 }
 
 exports = Tabs;
