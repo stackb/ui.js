@@ -220,7 +220,7 @@ class Route extends EventTarget {
     this.assertInProgress();
     var index = this.index_++;
     this.progress_[index] = component;
-    //console.log(`progress made: ${index}, ${this.path_[index]} ${this.unmatchedPath()}`, component);
+    // console.log(`progress made: ${index}, ${this.path_[index]} ${this.unmatchedPath()}`, component);
     component.show();
     this.notifyEvent(Route.EventType.PROGRESS, component);
   }

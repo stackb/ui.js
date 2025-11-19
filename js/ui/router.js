@@ -49,7 +49,6 @@ class Router extends EventTarget {
      * @type {boolean}
      */
     this.strict_ = true;
-
   }
 
   /**

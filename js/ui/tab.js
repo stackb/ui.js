@@ -29,6 +29,8 @@ class Tab extends Select {
 
   /**
    * @override
+   * @param {string} name
+   * @param {!Route} route
    */
   selectFail(name, route) {
     this.failHandler_(name, route);

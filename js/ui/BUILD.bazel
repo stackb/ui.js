@@ -4,30 +4,28 @@ package(default_visibility = ["//visibility:public"])
 
 closure_js_library(
     name = "core",
-    srcs = [
-        "core.js",
-    ],
+    srcs = ["core.js"],
     deps = [
         ":history",
         ":injector",
         ":keyboard",
-        "@com_google_javascript_closure_library//closure/goog/asserts",
-        "@com_google_javascript_closure_library//closure/goog/asserts:dom",
-        "@com_google_javascript_closure_library//closure/goog/dom",
-        "@com_google_javascript_closure_library//closure/goog/events",
-        "@com_google_javascript_closure_library//closure/goog/events:eventhandler",
-        "@com_google_javascript_closure_library//closure/goog/events:eventtarget",
-        "@com_google_javascript_closure_library//closure/goog/fx:dom",
-        "@com_google_javascript_closure_library//closure/goog/fx:easing",
-        "@com_google_javascript_closure_library//closure/goog/history:event",
-        "@com_google_javascript_closure_library//closure/goog/history:eventtype",
-        "@com_google_javascript_closure_library//closure/goog/object",
-        "@com_google_javascript_closure_library//closure/goog/promise",
-        "@com_google_javascript_closure_library//closure/goog/promise:resolver",
-        "@com_google_javascript_closure_library//closure/goog/string",
-        "@com_google_javascript_closure_library//closure/goog/style",
-        "@com_google_javascript_closure_library//closure/goog/ui:component",
-        "@com_google_javascript_closure_library//closure/goog/ui:control",
+        "@io_bazel_rules_closure//closure/goog/asserts",
+        "@io_bazel_rules_closure//closure/goog/asserts:dom",
+        "@io_bazel_rules_closure//closure/goog/dom",
+        "@io_bazel_rules_closure//closure/goog/events",
+        "@io_bazel_rules_closure//closure/goog/events:eventhandler",
+        "@io_bazel_rules_closure//closure/goog/events:eventtarget",
+        "@io_bazel_rules_closure//closure/goog/fx:dom",
+        "@io_bazel_rules_closure//closure/goog/fx:easing",
+        "@io_bazel_rules_closure//closure/goog/history:event",
+        "@io_bazel_rules_closure//closure/goog/history:eventtype",
+        "@io_bazel_rules_closure//closure/goog/object",
+        "@io_bazel_rules_closure//closure/goog/promise",
+        "@io_bazel_rules_closure//closure/goog/promise:resolver",
+        "@io_bazel_rules_closure//closure/goog/string",
+        "@io_bazel_rules_closure//closure/goog/style",
+        "@io_bazel_rules_closure//closure/goog/ui:component",
+        "@io_bazel_rules_closure//closure/goog/ui:control",
     ],
 )
 
@@ -38,42 +36,38 @@ closure_js_library(
         "history/event.js",
     ],
     deps = [
-        "@com_google_javascript_closure_library//closure/goog/asserts:dom",
-        "@com_google_javascript_closure_library//closure/goog/dom",
-        "@com_google_javascript_closure_library//closure/goog/dom:tagname",
-        "@com_google_javascript_closure_library//closure/goog/events",
-        "@com_google_javascript_closure_library//closure/goog/events:event",
-        "@com_google_javascript_closure_library//closure/goog/events:eventtarget",
-        "@com_google_javascript_closure_library//closure/goog/events:eventtype",
-        "@com_google_javascript_closure_library//closure/goog/history:event",
-        "@com_google_javascript_closure_library//closure/goog/history:eventtype",
-        "@com_google_javascript_closure_library//closure/goog/history:html5history",
-        "@com_google_javascript_closure_library//closure/goog/string",
+        "@io_bazel_rules_closure//closure/goog/asserts:dom",
+        "@io_bazel_rules_closure//closure/goog/dom",
+        "@io_bazel_rules_closure//closure/goog/dom:tagname",
+        "@io_bazel_rules_closure//closure/goog/events",
+        "@io_bazel_rules_closure//closure/goog/events:event",
+        "@io_bazel_rules_closure//closure/goog/events:eventtarget",
+        "@io_bazel_rules_closure//closure/goog/events:eventtype",
+        "@io_bazel_rules_closure//closure/goog/history:event",
+        "@io_bazel_rules_closure//closure/goog/history:eventtype",
+        "@io_bazel_rules_closure//closure/goog/history:html5history",
+        "@io_bazel_rules_closure//closure/goog/string",
     ],
 )
 
 closure_js_library(
     name = "keyboard",
-    srcs = [
-        "keyboard.js",
-    ],
+    srcs = ["keyboard.js"],
     deps = [
-        "@com_google_javascript_closure_library//closure/goog/disposable",
-        "@com_google_javascript_closure_library//closure/goog/events",
-        "@com_google_javascript_closure_library//closure/goog/object",
-        "@com_google_javascript_closure_library//closure/goog/ui:keyboardshortcuthandler",
+        "@io_bazel_rules_closure//closure/goog/disposable",
+        "@io_bazel_rules_closure//closure/goog/events",
+        "@io_bazel_rules_closure//closure/goog/object",
+        "@io_bazel_rules_closure//closure/goog/ui:keyboardshortcuthandler",
     ],
 )
 
 closure_js_library(
     name = "template",
-    srcs = [
-        "template.js",
-    ],
+    srcs = ["template.js"],
     deps = [
         ":core",
-        "@com_google_javascript_closure_library//closure/goog/dom",
-        "@com_google_javascript_closure_library//closure/goog/soy",
+        "@io_bazel_rules_closure//closure/goog/dom",
+        "@io_bazel_rules_closure//closure/goog/soy",
     ],
 )
 
@@ -88,31 +82,29 @@ closure_js_library(
     deps = [
         ":core",
         ":template",
-        "@com_google_javascript_closure_library//closure/goog/asserts",
-        "@com_google_javascript_closure_library//closure/goog/dom",
-        "@com_google_javascript_closure_library//closure/goog/dom:classlist",
-        "@com_google_javascript_closure_library//closure/goog/dom:dataset",
-        "@com_google_javascript_closure_library//closure/goog/dom:tagname",
-        "@com_google_javascript_closure_library//closure/goog/events:event",
+        "@io_bazel_rules_closure//closure/goog/asserts",
+        "@io_bazel_rules_closure//closure/goog/dom",
+        "@io_bazel_rules_closure//closure/goog/dom:classlist",
+        "@io_bazel_rules_closure//closure/goog/dom:dataset",
+        "@io_bazel_rules_closure//closure/goog/dom:tagname",
+        "@io_bazel_rules_closure//closure/goog/events:event",
     ],
 )
 
 closure_js_library(
     name = "menushield",
-    srcs = [
-        "menushield.js",
-    ],
+    srcs = ["menushield.js"],
     deps = [
-        "@com_google_javascript_closure_library//closure/goog/asserts",
-        "@com_google_javascript_closure_library//closure/goog/dom",
-        "@com_google_javascript_closure_library//closure/goog/events",
-        "@com_google_javascript_closure_library//closure/goog/math:coordinate",
-        "@com_google_javascript_closure_library//closure/goog/style",
-        "@com_google_javascript_closure_library//closure/goog/ui:component",
-        "@com_google_javascript_closure_library//closure/goog/ui:container",
-        "@com_google_javascript_closure_library//closure/goog/ui:menu",
-        "@com_google_javascript_closure_library//closure/goog/ui:menubutton",
-        "@com_google_javascript_closure_library//closure/goog/ui:submenu",
+        "@io_bazel_rules_closure//closure/goog/asserts",
+        "@io_bazel_rules_closure//closure/goog/dom",
+        "@io_bazel_rules_closure//closure/goog/events",
+        "@io_bazel_rules_closure//closure/goog/math:coordinate",
+        "@io_bazel_rules_closure//closure/goog/style",
+        "@io_bazel_rules_closure//closure/goog/ui:component",
+        "@io_bazel_rules_closure//closure/goog/ui:container",
+        "@io_bazel_rules_closure//closure/goog/ui:menu",
+        "@io_bazel_rules_closure//closure/goog/ui:menubutton",
+        "@io_bazel_rules_closure//closure/goog/ui:submenu",
     ],
 )
 
@@ -124,17 +116,15 @@ closure_js_library(
     ],
     deps = [
         ":core",
-        "@com_google_javascript_closure_library//closure/goog/asserts",
-        "@com_google_javascript_closure_library//closure/goog/asserts:dom",
-        "@com_google_javascript_closure_library//closure/goog/dom",
+        "@io_bazel_rules_closure//closure/goog/asserts",
+        "@io_bazel_rules_closure//closure/goog/asserts:dom",
+        "@io_bazel_rules_closure//closure/goog/dom",
     ],
 )
 
 closure_js_library(
     name = "injector",
-    srcs = [
-        "injector.js",
-    ],
+    srcs = ["injector.js"],
     deps = [
         # ":core",
     ],
@@ -151,11 +141,11 @@ closure_js_library(
         ":select",
         ":syntax",
         ":template",
-        "@com_google_javascript_closure_library//closure/goog/asserts",
-        "@com_google_javascript_closure_library//closure/goog/dom",
-        "@com_google_javascript_closure_library//closure/goog/history:eventtype",
-        "@com_google_javascript_closure_library//closure/goog/object",
-        "@com_google_javascript_closure_library//closure/goog/promise",
+        "@io_bazel_rules_closure//closure/goog/asserts",
+        "@io_bazel_rules_closure//closure/goog/dom",
+        "@io_bazel_rules_closure//closure/goog/history:eventtype",
+        "@io_bazel_rules_closure//closure/goog/object",
+        "@io_bazel_rules_closure//closure/goog/promise",
     ],
 )
 
@@ -167,22 +157,17 @@ closure_js_test(
     entry_points = ["goog:stack.ui.ComponentTest"],
     deps = [
         ":ui",
-        "@io_bazel_rules_closure//closure/library",
         "@io_bazel_rules_closure//closure/library:testing",
     ],
 )
 
 closure_js_test(
     name = "route_test",
-    srcs = [
-        "route_test.js",
-    ],
+    srcs = ["route_test.js"],
     entry_points = ["goog:stack.ui.RouteTest"],
     deps = [
         ":core",
         ":select",
-        ":app",
-        # "@io_bazel_rules_closure//closure/library",
         "@io_bazel_rules_closure//closure/library:testing",
     ],
 )
@@ -195,10 +180,10 @@ closure_js_test(
     entry_points = ["goog:stack.ui.HistoryTest"],
     deps = [
         ":history",
-        "@com_google_javascript_closure_library//closure/goog/dom",
-        "@com_google_javascript_closure_library//closure/goog/dom:tagname",
-        "@com_google_javascript_closure_library//closure/goog/events",
-        "@com_google_javascript_closure_library//closure/goog/string",
+        "@io_bazel_rules_closure//closure/goog/dom",
+        "@io_bazel_rules_closure//closure/goog/dom:tagname",
+        "@io_bazel_rules_closure//closure/goog/events",
+        "@io_bazel_rules_closure//closure/goog/string",
         "@io_bazel_rules_closure//closure/library:testing",
     ],
 )
