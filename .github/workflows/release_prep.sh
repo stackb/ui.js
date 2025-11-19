@@ -23,6 +23,6 @@ cat << EOF
 Add to your \`MODULE.bazel\` file:
 
 \`\`\`starlark
-bazel_dep(name = "build_stack_ui_js", version = "${TAG}")
+bazel_dep(name = "stackb_ui_js", version = "${TAG}")
 \`\`\`
 EOF
