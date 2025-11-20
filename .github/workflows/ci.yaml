@@ -32,3 +32,10 @@ jobs:
           --bazelrc=.bazelrc
           build
           ...
+      - name: bazel test
+        run: >-
+          bazelisk
+          --bazelrc=.github/workflows/ci.bazelrc
+          --bazelrc=.bazelrc
+          test
+          ...
