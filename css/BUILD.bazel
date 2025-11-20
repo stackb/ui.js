@@ -1,6 +1,6 @@
-package(default_visibility = ["//visibility:public"])
+load("@stackb_rules_closure//closure:defs.bzl", "closure_css_library")
 
-load("@io_bazel_rules_closure//closure:defs.bzl", "closure_css_library", "closure_css_binary")
+package(default_visibility = ["//visibility:public"])
 
 closure_css_library(
     name = "style",
