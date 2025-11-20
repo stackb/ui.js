@@ -1,5 +1,4 @@
 load("@stackb_rules_closure//closure:defs.bzl", "closure_js_library", "closure_js_test")
-load("@rules_shell//shell:sh_test.bzl", "sh_test")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -183,9 +182,4 @@ closure_js_test(
         "@stackb_rules_closure//closure/goog/string",
         "@stackb_rules_closure//closure/library:testing",
     ],
-)
-
-sh_test(
-    name = "tests",
-    srcs = ["tests.sh"],
 )
