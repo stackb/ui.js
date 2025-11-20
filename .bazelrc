@@ -2,3 +2,9 @@ build --java_language_version=21
 build --java_runtime_version=21
 build --tool_java_language_version=21
 build --tool_java_runtime_version=21
+
+# To facilitate testing in bazelci incompatible flags
+# @see https://github.com/bazelbuild/bazel/pull/26906#issue-3386957462
+# build --incompatible_autoload_externally=@rules_python,+java_common,+JavaInfo,+JavaPluginInfo,+ProguardSpecProvider,+java_binary,+java_import,+java_library,+java_plugin,+java_test,+java_runtime,+java_toolchain,+java_package_configuration,@com_google_protobuf,@rules_shell,+@rules_android,+@rules_cc
+# build --incompatible_autoload_externally=@rules_shell
+build --incompatible_autoload_externally=
