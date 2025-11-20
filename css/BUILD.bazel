@@ -3,7 +3,7 @@ load("@stackb_rules_closure//closure:defs.bzl", "closure_css_library")
 package(default_visibility = ["//visibility:public"])
 
 closure_css_library(
-    name = "style",
+    name = "css",
     srcs = [
         "goog.css",
     ],
