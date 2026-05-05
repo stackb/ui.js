@@ -88,6 +88,7 @@ closure_js_library(
         "@stackb_rules_closure//closure/goog/dom:dataset",
         "@stackb_rules_closure//closure/goog/dom:tagname",
         "@stackb_rules_closure//closure/goog/events:event",
+        "@stackb_rules_closure//closure/goog/ui:component",
     ],
 )
 

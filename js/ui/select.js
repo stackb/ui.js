@@ -3,6 +3,7 @@
  */
 goog.module('stack.ui.Select');
 
+const ComponentEventType = goog.require('goog.ui.Component.EventType');
 const TabEvent = goog.require('stack.ui.TabEvent');
 const Template = goog.require('stack.ui.Template');
 const asserts = goog.require('goog.asserts');
@@ -97,7 +98,12 @@ class Select extends Component {
   showTab(name) {
     var tab = this.getTab(name);
     if (tab) {
-      this.hideCurrent();
+      // Don't tear down the current tab when re-selecting it (e.g.
+      // navigating from /modules/foo/0.5.4 to /modules/foo/0.5.5 — at the
+      // outer BodySelect level the tab name is still "modules").
+      if (this.current_ !== name) {
+        this.hideCurrent();
+      }
       this.current_ = name;
       //var path = this.getPath();
       //path.push(name);
@@ -227,19 +233,34 @@ class Select extends Component {
   }
 
   /**
-   * Hide the current tab and make it the previous.
+   * Hide the current tab and make it the previous. The outgoing tab is
+   * removed from this Select's children, detached from the DOM, and
+   * disposed — so its component lifecycle reaches `exitDocument` and
+   * `disposeInternal`, releasing event handlers and any custom state.
+   * Subscribers that key off the tab name (e.g. SelectNav highlights) get
+   * a final HIDE event before the element goes away.
+   *
+   * Tabs are recreated on demand by `selectFail` if the user navigates
+   * back to them.
+   *
    * @return {?Component}
    */
   hideCurrent() {
-    var prev = null;
-    if (this.current_) {
-      this.prev_ = this.current_;
-      prev = this.getTab(this.prev_);
-      if (prev) {
-        prev.hide();
-      }
+    if (!this.current_) {
+      return null;
     }
+    const name = this.current_;
+    const prev = this.getTab(name);
+    this.prev_ = name;
     this.current_ = null;
+    if (prev) {
+      // Notify listeners (e.g. SelectNav) before the element is gone.
+      prev.dispatchEvent(ComponentEventType.HIDE);
+      // removeChild(c, true) detaches the element and fires exitDocument.
+      this.removeChild(prev, true);
+      delete this.name2id_[name];
+      prev.dispose();
+    }
     return prev;
   }
 

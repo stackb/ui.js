@@ -140,13 +140,6 @@ class Route extends EventTarget {
     return this.path_.slice(0, this.index_);
   }
 
-  // /** Peek at the next path segment.
-  //  * @return {string}
-  //  */
-  // next() {
-  //   return this.path_[this.index_ + 1];
-  // }
-
   /** Get the current path segment.
    * @return {string}
    */
